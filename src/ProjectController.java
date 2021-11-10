@@ -1,6 +1,7 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
@@ -40,6 +41,11 @@ public class ProjectController {
         this.view.gridPaneForStudents.add(rulesForStudents, 1, 1);
 
         //initialize the buttons for this page
+        this.view.seeCourses = new Button("See courses");
+        this.view.seeGrades = new Button("See grades");
+
+        this.view.gridPaneForStudents.add(this.view.seeCourses, 40, 50);
+        this.view.gridPaneForStudents.add(this.view.seeGrades, 50, 60);
     }
 
 /*
