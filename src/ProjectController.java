@@ -32,11 +32,14 @@ public class ProjectController {
     }
 
     void findStudentsPage(){ //we display the scene with the students' informations
-
-        Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend.");
         this.view.primaryStage.setScene(this.view.studentScene);
         this.view.primaryStage.show();
+
+        //add the rules for this page
+        Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend.");
         this.view.gridPaneForStudents.add(rulesForStudents, 1, 1);
+
+        //initialize the buttons for this page
     }
 
 /*

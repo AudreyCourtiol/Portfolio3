@@ -10,22 +10,35 @@ import javafx.stage.Stage;
 
 public class ProjectView {
     //a gridPane is the thing on which you display your labels, buttons, text fields ect
+    Stage primaryStage;
+
+    //Scene number 1
     GridPane startview;
     Scene primaryScene;
-    GridPane gridPaneForStudents;
-    GridPane gridPanefor3;
-    GridPane gridPanefor4;
-    Scene studentScene;
-    Scene averagesScene;
-    Scene modifyGradesScene;
-    Stage primaryStage;
-    Label StartStationLbl;
-    Label EndStationLbl;
-    Label TimeLbl;
     Button ExitBtn;
     Button FindStudents;
     Button GetAverages;
     Button ModifyGrades;
+
+
+    //Scene for students informations
+    GridPane gridPaneForStudents;
+    Scene studentScene;
+    Button seeCourses;
+    Button seeGrades;
+    TextArea textfieldCourses;
+    TextArea textfieldGrades;
+    Button selectAStudent; //menu défilant à coder
+
+    Button goBack; //use on all last three scenes to go back to the first one
+
+    GridPane gridPanefor3;
+    Scene averagesScene;
+
+
+    Scene modifyGradesScene;
+    GridPane gridPanefor4;
+
     /*
     ComboBox<String> StartStationComB;
     ComboBox<String> EndStationComB;
