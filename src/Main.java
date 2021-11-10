@@ -8,7 +8,7 @@ import java.sql.*;
 public class Main extends Application {
             public void start(Stage primaryStage)  {
                 String url = "jdbc:sqlite:C:\\Java programs\\Portfolio3.db";
-                ProjectView view=new ProjectView();
+                ProjectView view=new ProjectView(primaryStage);
                 ProjectModel model=new ProjectModel(url);
                 ProjectController control=null;
 
@@ -18,9 +18,6 @@ public class Main extends Application {
                     e.printStackTrace();
                     System.out.println(e.getMessage());
                 }
-                primaryStage.setTitle("Students Course Registration");
-                primaryStage.setScene(new Scene(view.asParent(),600,475));
-                primaryStage.show();
 
 
             }

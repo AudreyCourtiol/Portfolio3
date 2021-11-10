@@ -1,7 +1,9 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
+import javafx.scene.layout.StackPane;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -10,10 +12,12 @@ public class ProjectController {
     ProjectView view;
     ProjectModel model;
 
+
     public ProjectController(ProjectView v, ProjectModel m) throws SQLException {
         this.view=v;
         this.model=m;
         this.view.ExitBtn.setOnAction(e-> Platform.exit()); //exit button
+        this.view.FindStudents.setOnAction(e -> findStudentsPage()); //clear the page and offer new options
 
         this.model.connectToTrainData();
         this.model.CreateStatement();
@@ -25,6 +29,14 @@ public class ProjectController {
 
         //    this.model.SQLQueryStationNames();
         //view.configure();
+    }
+
+    void findStudentsPage(){ //we display the scene with the students' informations
+
+        Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend.");
+        this.view.primaryStage.setScene(this.view.studentScene);
+        this.view.primaryStage.show();
+        this.view.gridPaneForStudents.add(rulesForStudents, 1, 1);
     }
 
 /*

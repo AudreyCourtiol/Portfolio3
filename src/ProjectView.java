@@ -1,14 +1,24 @@
 import javafx.collections.ObservableList;
 import javafx.geometry.Insets;
 import javafx.scene.Parent;
+import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
+import javafx.stage.Stage;
 
 public class ProjectView {
+    //a gridPane is the thing on which you display your labels, buttons, text fields ect
     GridPane startview;
+    Scene primaryScene;
+    GridPane gridPaneForStudents;
+    GridPane gridPanefor3;
+    GridPane gridPanefor4;
+    Scene studentScene;
+    Scene averagesScene;
+    Scene modifyGradesScene;
+    Stage primaryStage;
     Label StartStationLbl;
     Label EndStationLbl;
     Label TimeLbl;
@@ -30,18 +40,39 @@ public class ProjectView {
 
     ObservableList<String> students;
 
-    public ProjectView(){
+    public ProjectView(Stage primaryStage){
+        //initialization of the window
+        this.primaryStage = primaryStage;
+        primaryStage.setTitle("Students Course Registration");
+
         startview=new GridPane();
+        gridPaneForStudents = new GridPane();
+        gridPanefor3 = new GridPane();
+        gridPanefor4 = new GridPane();
         CreateView();
     }
 
     //we create the window
     private void CreateView(){
+        //we initialize all scenes
+        this.primaryScene = new Scene(this.asParentForPrimaryScene(),600,475);
+        this.studentScene = new Scene(this.asParentForStudentScene(),600,475);
+        this.modifyGradesScene = new Scene(this.asParentForModifyGrades(),600,475);
+        this.averagesScene =  new Scene(this.asParentForAverages(),600,475);
+
+        //we put our primary scene on the stage when we start
+        primaryStage.setScene(primaryScene);
+        primaryStage.show();
+
+        //we choose the parameters we want for our first display
         startview.setMinSize(300,200);
         startview.setPadding( new Insets(10,10,10,10));
         startview.setHgap(5);
         startview.setVgap(5);
 
+        //we choose what we want to display on our first display
+
+        //initialize the buttons
         ExitBtn=new Button("Exit");
         FindStudents=new Button("Find students");
         GetAverages = new Button("Get averages");
@@ -92,7 +123,18 @@ public class ProjectView {
 
     }*/
 
-    public Parent asParent(){
+    public Parent asParentForPrimaryScene(){
         return  startview;
+    }
+
+    public Parent asParentForStudentScene(){
+        return gridPaneForStudents;
+    }
+
+    public Parent asParentForModifyGrades(){
+        return  gridPanefor3;
+    }
+    public Parent asParentForAverages(){
+        return  gridPanefor4;
     }
 }
