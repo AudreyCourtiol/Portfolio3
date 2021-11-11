@@ -44,8 +44,13 @@ public class ProjectController {
         this.view.seeCourses = new Button("See courses");
         this.view.seeGrades = new Button("See grades");
 
-        this.view.gridPaneForStudents.add(this.view.seeCourses, 40, 50);
-        this.view.gridPaneForStudents.add(this.view.seeGrades, 50, 60);
+        this.view.gridPaneForStudents.add(this.view.seeCourses, 40, 50); ///mettre à la bonne place
+        this.view.gridPaneForStudents.add(this.view.seeGrades, 250, 60);
+
+        this.view.textfieldCourses = new TextArea();
+        this.view.textfieldGrades = new TextArea();
+        this.view.gridPaneForStudents.add(this.view.textfieldCourses,1,20,5,5);
+        this.view.gridPaneForStudents.add(this.view.textfieldGrades,10,20,5,5);
     }
 
 /*

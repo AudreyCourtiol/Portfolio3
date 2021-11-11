@@ -28,7 +28,7 @@ public class ProjectView {
     Button seeGrades;
     TextArea textfieldCourses;
     TextArea textfieldGrades;
-    Button selectAStudent; //menu défilant à coder
+    Button selectAStudent; //menu défilant à coder -> comboBox
 
     Button goBack; //use on all last three scenes to go back to the first one
 
@@ -68,10 +68,10 @@ public class ProjectView {
     //we create the window
     private void CreateView(){
         //we initialize all scenes
-        this.primaryScene = new Scene(this.asParentForPrimaryScene(),600,475);
-        this.studentScene = new Scene(this.asParentForStudentScene(),600,475);
-        this.modifyGradesScene = new Scene(this.asParentForModifyGrades(),600,475);
-        this.averagesScene =  new Scene(this.asParentForAverages(),600,475);
+        this.primaryScene = new Scene(this.asParentForPrimaryScene(),600,500);
+        this.studentScene = new Scene(this.asParentForStudentScene(),600,500);
+        this.modifyGradesScene = new Scene(this.asParentForModifyGrades(),600,500);
+        this.averagesScene =  new Scene(this.asParentForAverages(),600,500);
 
         //we put our primary scene on the stage when we start
         primaryStage.setScene(primaryScene);
