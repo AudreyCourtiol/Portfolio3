@@ -2,6 +2,7 @@ import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.StackPane;
@@ -19,6 +20,9 @@ public class ProjectController {
         this.model=m;
         this.view.ExitBtn.setOnAction(e-> Platform.exit()); //exit button
         this.view.FindStudents.setOnAction(e -> findStudentsPage()); //clear the page and offer new options
+        this.view.ModifyGrades.setOnAction(e -> modifyGrades());
+        this.view.GetAverages.setOnAction(e -> getAverages());
+
 
         this.model.connectToTrainData();
         this.model.CreateStatement();
@@ -37,20 +41,41 @@ public class ProjectController {
         this.view.primaryStage.show();
 
         //add the rules for this page
-        Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend.");
+        Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend: ");
         this.view.gridPaneForStudents.add(rulesForStudents, 1, 1);
+        //This allows us to choose an option on a list
+        this.view.selectStudentsCB = new ComboBox<>();
+        this.view.gridPaneForStudents.add(this.view.selectStudentsCB,30,1);
 
         //initialize the buttons for this page
         this.view.seeCourses = new Button("See courses");
         this.view.seeGrades = new Button("See grades");
 
-        this.view.gridPaneForStudents.add(this.view.seeCourses, 40, 50); ///mettre à la bonne place
-        this.view.gridPaneForStudents.add(this.view.seeGrades, 250, 60);
+        this.view.gridPaneForStudents.add(this.view.seeCourses, 1, 7); ///mettre à la bonne place
+        this.view.gridPaneForStudents.add(this.view.seeGrades, 1, 60);
 
+        //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldCourses = new TextArea();
         this.view.textfieldGrades = new TextArea();
-        this.view.gridPaneForStudents.add(this.view.textfieldCourses,1,20,5,5);
-        this.view.gridPaneForStudents.add(this.view.textfieldGrades,10,20,5,5);
+        this.view.gridPaneForStudents.add(this.view.textfieldCourses,1,20,2,2);
+        this.view.gridPaneForStudents.add(this.view.textfieldGrades,1,70,2,2);
+
+        this.view.goBack = new Button("Back");
+        this.view.gridPaneForStudents.add(this.view.goBack,40,80);
+
+    }
+
+    void modifyGrades(){
+
+
+
+        this.view.goBack = new Button("Back");
+        this.view.gridPaneforModifyGrades.add(this.view.goBack,40,80);
+    }
+
+    void getAverages(){
+        this.view.goBack = new Button("Back");
+        this.view.gridPaneforAverages.add(this.view.goBack,40,80);
     }
 
 /*

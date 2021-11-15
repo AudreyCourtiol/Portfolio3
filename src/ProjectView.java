@@ -3,7 +3,7 @@ import javafx.geometry.Insets;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
@@ -12,7 +12,7 @@ public class ProjectView {
     //a gridPane is the thing on which you display your labels, buttons, text fields ect
     Stage primaryStage;
 
-    //Scene number 1
+    //Scene number 1 : menu
     GridPane startview;
     Scene primaryScene;
     Button ExitBtn;
@@ -28,16 +28,17 @@ public class ProjectView {
     Button seeGrades;
     TextArea textfieldCourses;
     TextArea textfieldGrades;
-    Button selectAStudent; //menu défilant à coder -> comboBox
+    ComboBox<String> selectStudentsCB;
 
     Button goBack; //use on all last three scenes to go back to the first one
 
-    GridPane gridPanefor3;
+    //Scene for Averages
+    GridPane gridPaneforAverages;
     Scene averagesScene;
 
 
     Scene modifyGradesScene;
-    GridPane gridPanefor4;
+    GridPane gridPaneforModifyGrades;
 
     /*
     ComboBox<String> StartStationComB;
@@ -60,8 +61,8 @@ public class ProjectView {
 
         startview=new GridPane();
         gridPaneForStudents = new GridPane();
-        gridPanefor3 = new GridPane();
-        gridPanefor4 = new GridPane();
+        gridPaneforAverages = new GridPane();
+        gridPaneforModifyGrades = new GridPane();
         CreateView();
     }
 
@@ -145,9 +146,9 @@ public class ProjectView {
     }
 
     public Parent asParentForModifyGrades(){
-        return  gridPanefor3;
+        return gridPaneforAverages;
     }
     public Parent asParentForAverages(){
-        return  gridPanefor4;
+        return gridPaneforModifyGrades;
     }
 }
