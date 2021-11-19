@@ -25,15 +25,33 @@ public class ProjectController {
 
         //we set the actions for our buttons
         this.view.ExitBtn.setOnAction(e-> Platform.exit()); //exit button
-        this.view.GetAverages.setOnAction(e -> getAverages());
-        this.view.FindStudents.setOnAction(e -> findStudentsPage()); //clear the page and offer new options
-        this.view.ModifyGrades.setOnAction(e -> modifyGrades());
+        this.view.GetAverages.setOnAction(e -> {
+            try {
+                getAverages();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
+        this.view.FindStudents.setOnAction(e -> {
+            try {
+                findStudentsPage();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }); //clear the page and offer new options
+        this.view.ModifyGrades.setOnAction(e -> {
+            try {
+                modifyGrades();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        });
 
         this.view.goBack.setOnAction(e -> goBack());
 
 
 
-        this.model.closeCourseDataConnection();
+        //this.model.closeCourseDataConnection();
         this.model.createStatement();
 
         //Put students' data in view
@@ -57,16 +75,22 @@ public class ProjectController {
         this.view.primaryStage.show();
     }
 
-    void findStudentsPage(){ //we display the scene with the students' informations
+    void findStudentsPage() throws SQLException { //we display the scene with the students' informations
         this.view.primaryStage.setScene(this.view.studentScene);
         this.view.primaryStage.show();
 
         //add the rules for this page
         Label rulesForStudents = new Label("Here you can select a student to get their grades or the courses they attend: ");
         this.view.gridPaneForStudents.add(rulesForStudents, 1, 1);
+
+
         //This allows us to choose an option on a list
         this.view.selectStudentsCB = new ComboBox<>();
         this.view.gridPaneForStudents.add(this.view.selectStudentsCB,30,1);
+
+        //We put in the list the data from the database
+        this.view.selectStudentsCB.setItems(getStudents());
+        this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
         //initialize the buttons for this page
         this.view.seeCourses = new Button("See courses");
@@ -89,7 +113,7 @@ public class ProjectController {
 
     }
 
-    void modifyGrades(){
+    void modifyGrades() throws SQLException {
         this.view.primaryStage.setScene(this.view.modifyGradesScene);
         this.view.primaryStage.show();
 
@@ -100,6 +124,9 @@ public class ProjectController {
         //This allows us to choose an option on a list
         this.view.selectStudentsCB = new ComboBox<>();
         this.view.gridPaneforModifyGrades.add(this.view.selectStudentsCB,30,1);
+        //We put in the list the data from the database
+        this.view.selectStudentsCB.setItems(getStudents());
+        this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
         this.view.textfieldModifyGrades = new TextArea();
         this.view.textfieldModifyGrades.setMaxWidth(200);
@@ -110,7 +137,7 @@ public class ProjectController {
         this.view.gridPaneforModifyGrades.add(this.view.goBack,40,80);
     }
 
-    void getAverages(){
+    void getAverages() throws SQLException {
         this.view.primaryStage.setScene(this.view.averagesScene);
         this.view.primaryStage.show();
 
@@ -120,6 +147,9 @@ public class ProjectController {
         //This allows us to choose an option on a list
         this.view.selectStudentsCB = new ComboBox<>();
         this.view.gridPaneforAverages.add(this.view.selectStudentsCB,30,1);
+        //We put in the list the data from the database
+        this.view.selectStudentsCB.setItems(getStudents());
+        this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldAverageOfCourse = new TextArea();
