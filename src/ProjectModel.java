@@ -5,97 +5,73 @@ import java.util.Scanner;
 public class ProjectModel {
     Connection conn=null;
     String url=null;
-    Statement stmt=null;
-    PreparedStatement pstmt=null;
     ResultSet rs=null;
-
+    Statement stmt=null;
     ProjectModel(String url){
         this.url=url;
     }
-
-    public void connectToTrainData() throws SQLException {
+    void connectCourseData()throws SQLException {
         conn= DriverManager.getConnection(url);
     }
-    public void closeTrainDataConnection() throws  SQLException{
-        if(conn!= null)
-            conn.close();
+    void closeCourseDataConnection()throws SQLException{
+        conn.close();
     }
-
-    public void CreateStatement() throws SQLException{
+    void createStatement()throws SQLException{
         this.stmt=conn.createStatement();
     }
-/*
-    public ArrayList<String> SQLQueryStationNames() throws SQLException{
-        ArrayList<String> stations=new ArrayList<>();
-        String sql = "Select name from station;";
-        rs=stmt.executeQuery(sql);
-        while(rs!=null && rs.next()){
-            String name=rs.getString(1);
+
+    //Gives all student names
+    ArrayList<String> SQLQueryStudentNames() throws SQLException{
+        ArrayList<String> students=new ArrayList<>();
+        String sql = "Select StudentName from Student";
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            String name = rs.getString(1);
             System.out.println(name);
-            stations.add(name);
+            students.add(name);
         }
-        return stations;
+        return students;
     }
 
-    public void RetrieveDeparturesforStation() throws SQLException{
-        System.out.println("Which station do you wish to find departures for?");
-        Scanner scanner = new Scanner(System.in);
-        String departureStation = scanner.nextLine();
-        String sql= "SELECT stationname, time FROM departure WHERE stationname ='"+departureStation+"';";
-        rs=stmt.executeQuery(sql);
-        while(rs!=null && rs.next()){
-            System.out.println(rs.getString(1) + " time: "+rs.getFloat(2));
+    //Gives all courses names
+    ArrayList<String> SQLQueryCourseNames() throws SQLException{
+        ArrayList<String> course=new ArrayList<>();
+        String sql = "Select CourseName from Course";
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            String name = rs.getString(1);
+            System.out.println(name);
+            course.add(name);
         }
-
+        return course;
     }
 
-    public void PstmtRetrieveDeparturesforStation() throws SQLException{
-        System.out.println("Which station do you wish to find departures for?");
-        Scanner scanner = new Scanner(System.in);
-        String departureStation = scanner.nextLine();
-        System.out.println("What time do you wish to depart:");
-        Float ft=scanner.nextFloat();
-        String sql= "SELECT stationname, time FROM departure WHERE stationname = ? and time > ?;";
-        pstmt=conn.prepareStatement(sql);
-        pstmt.setString(1,departureStation);
-        pstmt.setFloat(2, ft);
-        rs=pstmt.executeQuery();
-        while(rs!=null && rs.next()){
-            System.out.println(rs.getString(1) + " time: "+rs.getFloat(2));
+    //Gives all grades
+    ArrayList<String> SQLQueryGrades() throws SQLException{
+        ArrayList<String> grades=new ArrayList<>();
+        String sql = "Select Grade from Grade";
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            String name = rs.getString(1);
+            System.out.println(name);
+            grades.add(name);
         }
+        return grades;
     }
 
-    public ArrayList<TrainInfo> QueryforDepartures(String from, String to, double time) throws SQLException{
-        // Scanner scanner = new Scanner(System.in);
-        ArrayList<TrainInfo> trainInfos=new ArrayList<>();
-        //  System.out.println("Which Station do you want to depart from:");
-        //  String stStation= scanner.nextLine();
-        //   System.out.println("Which Station do you want to go to?");
-        //   String endStation=scanner.nextLine();
-        //  System.out.println("At what time would you like to depart?");
-        //  float departuretime = scanner.nextFloat();
-        String sql="SELECT D1.trainid as train, D1.Stationname as start, D1.time as departure, "
-                +"D2.stationname as destination, D2.time as arrival "
-                + " FROM departure as D1 "
-                +" JOIN departure as D2 ON D1.trainid=D2.trainid "
-                +"WHERE D1.Stationname= ? AND D1.time > ? AND D2.Stationname= ? AND D1.time<D2.time ;";
-        pstmt=conn.prepareStatement(sql);
-        pstmt.setString(1,from);
-        pstmt.setDouble(2,time);
-        pstmt.setString(3,to);
-        rs=pstmt.executeQuery();
-        while(rs!=null && rs.next()){
-            String start=rs.getString("start");
-            String end=rs.getString("destination");
-            Integer train=rs.getInt("train");
-            float depart=rs.getFloat("departure");
-            float arr=rs.getFloat("arrival");
-            System.out.println(train+ ": "+ start + " at "+ depart + " -> "+ end + " at "+arr);
-            TrainInfo t=new TrainInfo(train, start, end,depart,arr);
-            trainInfos.add(t);
+    //Gives all professors names
+    ArrayList<String> SQLQueryProfessorName() throws SQLException{
+        ArrayList<String> prof=new ArrayList<>();
+        String sql = "Select ProfessorName from Professor";
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            String name = rs.getString(1);
+            System.out.println(name);
+            prof.add(name);
         }
-        return trainInfos;
-    }*/
+        return prof;
+    }
+
 }
 
 class StudentInfo{

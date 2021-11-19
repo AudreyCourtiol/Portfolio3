@@ -1,12 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="DataSourceManagerImpl" format="xml" multifile-model="true">
-    <data-source source="LOCAL" name="Portfolio3.db" uuid="3bfa5e60-c8d0-47cc-b1aa-1fb98fd5ef84">
+    <data-source source="LOCAL" name="Portfolio3" uuid="123285d7-e636-4662-ad60-9b58be758339">
       <driver-ref>sqlite.xerial</driver-ref>
       <synchronize>true</synchronize>
       <jdbc-driver>org.sqlite.JDBC</jdbc-driver>
-      <jdbc-url>jdbc:sqlite:C:\Java programs\Portfolio3.db</jdbc-url>
+      <jdbc-url>jdbc:sqlite:C:\Java RUC\SD\Portfolio3\Portfolio3.db</jdbc-url>
       <working-dir>$ProjectFileDir$</working-dir>
+      <libraries>
+        <library>
+          <url>file://$APPLICATION_CONFIG_DIR$/jdbc-drivers/Xerial SQLiteJDBC/3.34.0/sqlite-jdbc-3.34.0.jar</url>
+        </library>
+      </libraries>
     </data-source>
   </component>
 </project>

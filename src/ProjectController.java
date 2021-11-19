@@ -27,8 +27,8 @@ public class ProjectController {
 
 
 
-        this.model.connectToTrainData();
-        this.model.CreateStatement();
+        this.model.closeCourseDataConnection();
+        this.model.createStatement();
         //this.view.stations =getStations();
         //this.view.hours=getHours();
         //this.view.minutes=getMinutes();
