@@ -38,6 +38,8 @@ public class ProjectController {
 
         //Put students' data in view
         this.view.students = getStudents();
+        this.view.courses = getCourses();
+        this.view.grades = getGrades();
 
 
         //this.view.stations =getStations();
@@ -137,6 +139,18 @@ public class ProjectController {
         ArrayList<String> students = model.SQLQueryStudents();
         ObservableList<String> studentnames= FXCollections.observableArrayList(students);
         return studentnames;
+    }
+
+    public ObservableList<String> getCourses() throws SQLException {
+        ArrayList<String> courses = model.SQLQueryCourseNames();
+        ObservableList<String> coursenames= FXCollections.observableArrayList(courses);
+        return coursenames;
+    }
+
+    public ObservableList<Double> getGrades() throws SQLException {
+        ArrayList<Double> grades = model.SQLQueryGrades();
+        ObservableList<Double> gradevalues= FXCollections.observableArrayList(grades);
+        return gradevalues;
     }
 
 /*

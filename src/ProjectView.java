@@ -102,28 +102,6 @@ public class ProjectView {
         startview.add(GetAverages,20,5);
         startview.add(ModifyGrades,25,5);
         startview.add(ExitBtn,40,20);
-
-        /*
-        StartStationComB=new ComboBox<>();
-        startview.add(StartStationComB,2,1);
-
-        EndStationComB = new ComboBox<>();
-        startview.add(EndStationComB,2,2);
-
-        HoursComB=new ComboBox<>();
-        startview.add(HoursComB,3,3);
-
-        MinutesComB= new ComboBox<>();
-        startview.add(MinutesComB,5,3);*/
-
-        /*
-        //To have a text field
-        textfield=new TextArea();
-        startview.add(textfield,1,7,15,10);*/
-
-
-
-
     }
 
     /*

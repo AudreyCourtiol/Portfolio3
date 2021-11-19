@@ -49,14 +49,14 @@ public class ProjectModel {
     }
 
     //Gives all grades
-    ArrayList<String> SQLQueryGrades() throws SQLException{
-        ArrayList<String> grades=new ArrayList<>();
+    ArrayList<Double> SQLQueryGrades() throws SQLException{
+        ArrayList<Double> grades=new ArrayList<>();
         String sql = "Select Grade from Grade";
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
-            String name = rs.getString(1);
-            System.out.println(name);
-            grades.add(name);
+            Double value = rs.getDouble(1);
+            System.out.println(value);
+            grades.add(value);
         }
         return grades;
     }
