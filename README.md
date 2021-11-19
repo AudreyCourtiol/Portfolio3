@@ -57,6 +57,15 @@ P.ProfessorID as PID,
         inner join Professor P on C.ProfessorID = P.ProfessorID;
 
 -- select student and print out courses taken
+SELECT Student, StudentID from Student, StudentAddress from Student
+WHERE StudentName= ?;
+
+SELECT Grade, CourseID from Grade
+WHERE StudentID =?;
+
+SELECT Course, CourseName from Course
+WHERE CourseID =?;
+
 
 --ask to see grade(s)
 

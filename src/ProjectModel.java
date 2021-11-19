@@ -6,7 +6,9 @@ public class ProjectModel {
     Connection conn=null;
     String url=null;
     ResultSet rs=null;
+    ResultSet rs2=null;
     Statement stmt=null;
+    PreparedStatement pstmt=null;
 
     public ProjectModel(String url){
         this.url=url;
@@ -77,17 +79,54 @@ public class ProjectModel {
         return prof;
     }
 
-}
+    //This method gets the informations about a student thanks to their name
+    public ArrayList<StudentInfo> QueryforStudent(String name) throws SQLException{
 
-class StudentInfo{
-    Integer studentID =null;
-    String studentName = null;
-    String studentAddress = null;
+        ArrayList<StudentInfo> studentInfo =new ArrayList<>();
 
+        //This is the sql line that gets us the information of the student
+        String sql = "SELECT StudentID, StudentAddress from Student"
+                + "WHERE StudentName='"+ name + "';";
 
-    StudentInfo(Integer id,String name, String address){
-        this.studentID = id;
-        this.studentName = name;
-        this.studentAddress = address;
+        pstmt=conn.prepareStatement(sql);
+        rs=pstmt.executeQuery();
+
+        while(rs!=null && rs.next()){
+            String address =rs.getString(2);
+            Integer id =rs.getInt(1);
+
+            System.out.println(name + ": "+ address + " and id is "+ id); //we print out the informations we got
+            StudentInfo t = new StudentInfo(id, name, address);
+            studentInfo.add(t);
+        }
+        return studentInfo;
     }
+
+    //This method gets the name of a course thanks to the Student ID
+    public ArrayList<String> QueryForCourseName(Integer StudentID) throws SQLException{
+
+        ArrayList<String> courseName =new ArrayList<>();
+
+        //This is the sql line that gets us the information of the student
+        String sql = "SELECT CourseID from Grade"
+                + "WHERE StudentID ='"+ StudentID + "';";
+
+        pstmt=conn.prepareStatement(sql);
+        rs=pstmt.executeQuery();
+
+        while(rs!=null && rs.next()){
+            int id =rs.getInt(1); //we get the course ID
+
+            String sql2 = "SELECT CourseName from Course"
+                    + "WHERE CourseID ='"+ id + "';";
+
+            pstmt=conn.prepareStatement(sql2);
+            rs2=pstmt.executeQuery();
+            String name = rs2.getString(1);
+
+            courseName.add(name);
+        }
+        return courseName;
+    }
+
 }

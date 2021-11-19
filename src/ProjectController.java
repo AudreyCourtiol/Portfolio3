@@ -95,6 +95,7 @@ public class ProjectController {
         //initialize the buttons for this page
         this.view.seeCourses = new Button("See courses");
         this.view.seeGrades = new Button("See grades");
+        this.view.seeCourses.setOnAction(e -> printCoursesTakenByStudent(this.view.selectStudentsCB.getValue()));
 
         this.view.gridPaneForStudents.add(this.view.seeCourses, 1, 7); ///mettre à la bonne place
         this.view.gridPaneForStudents.add(this.view.seeGrades, 1, 60);
@@ -103,6 +104,9 @@ public class ProjectController {
         this.view.textfieldCourses = new TextArea();
         this.view.textfieldCourses.setMaxWidth(200);
         this.view.textfieldCourses.setMaxHeight(100);
+
+
+
         this.view.textfieldGrades = new TextArea();
         this.view.textfieldGrades.setMaxWidth(200);
         this.view.textfieldGrades.setMaxHeight(100);
@@ -111,6 +115,28 @@ public class ProjectController {
 
         this.view.gridPaneForStudents.add(this.view.goBack,40,80);
 
+    }
+
+    //This method prints out the courses taken by the student chosen
+    void printCoursesTakenByStudent(String studentName){
+
+        //get student ID
+        //get course ID
+        //get course name
+        //print out course name in textfield for courses
+
+        try {
+            ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
+
+            ArrayList<String> coursesTaken = model.QueryForCourseName(student.get(0).studentID); //we get the courses taken by that student
+
+            for (int i = 0; i < coursesTaken.size(); i++) {
+                this.view.textfieldCourses.appendText(i + ":" + coursesTaken.get(i));
+            }
+
+        }catch (SQLException e ){
+            System.out.println(e.getMessage());
+        }
     }
 
     void modifyGrades() throws SQLException {
