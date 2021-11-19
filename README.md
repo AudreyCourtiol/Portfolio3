@@ -61,6 +61,21 @@ P.ProfessorID as PID,
 --ask to see grade(s)
 
 --if grade = null, type in grade
+--I'm trying shit out....
+SELECT Grade
+FROM Grade where Grade= null;
+
+INSERT INTO Grade (Grade, CourseID, StudentID)
+VALUES (?,CourseID,StudentID);
+
+UPDATE Grade
+SET Grade= '?'
+WHERE Grade=null;
+
+INSERT INTO Grade (Grade, CourseID, StudentID)
+SELECT Grade
+FROM Grade
+WHERE Grade=null;
 
 --get average grade of a student
 
