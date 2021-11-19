@@ -22,6 +22,25 @@ public class ProjectModel {
         this.stmt=conn.createStatement();
     }
 
+    //**** QUERY ****//
+
+    //select student and print out courses taken
+    ArrayList<String> SQLQueryCoursesPerStudent() throws SQLException{
+        ArrayList<String> courses=new ArrayList<>();
+        String sql= "Select CourseID from Grade";
+        rs = stmt.executeQuery(sql);
+
+
+        System.out.println("Of which student do you wish to know the courses?");
+        Scanner scanner = new Scanner(System.in);
+        String student = scanner.nextLine();
+        String sql= "SELECT StudentName, time FROM departure WHERE stationname ='"+departureStation+"';";
+        rs=stmt.executeQuery(sql);
+        while(rs!=null && rs.next()){
+            System.out.println(rs.getString(1) + " time: "+rs.getFloat(2));
+        }
+    }
+
     //Gives all student names from database
     ArrayList<String> SQLQueryStudents() throws SQLException{
         ArrayList<String> students =new ArrayList<>();
