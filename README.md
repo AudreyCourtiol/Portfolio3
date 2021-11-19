@@ -57,13 +57,13 @@ P.ProfessorID as PID,
         inner join Professor P on C.ProfessorID = P.ProfessorID;
 
 -- select student and print out courses taken
-SELECT Student, StudentID from Student, StudentAddress from Student
+SELECT StudentID, StudentAddress from Student
 WHERE StudentName= ?;
 
-SELECT Grade, CourseID from Grade
+SELECT CourseID from Grade
 WHERE StudentID =?;
 
-SELECT Course, CourseName from Course
+SELECT CourseName from Course
 WHERE CourseID =?;
 
 
