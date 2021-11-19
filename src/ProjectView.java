@@ -28,17 +28,22 @@ public class ProjectView {
     Button seeGrades;
     TextArea textfieldCourses;
     TextArea textfieldGrades;
-    ComboBox<String> selectStudentsCB;
+    ComboBox<String> selectStudentsCB; //also used for averages
 
     Button goBack; //use on all last three scenes to go back to the first one
 
     //Scene for Averages
     GridPane gridPaneforAverages;
     Scene averagesScene;
+    //average grade of a student
+    //average grade on a selected course
+    TextArea textfieldAverageOfCourse;
+    TextArea textfieldAverageOfStudent;
 
 
     Scene modifyGradesScene;
     GridPane gridPaneforModifyGrades;
+    TextArea textfieldModifyGrades;
 
     /*
     ComboBox<String> StartStationComB;
@@ -91,6 +96,7 @@ public class ProjectView {
         FindStudents=new Button("Find students");
         GetAverages = new Button("Get averages");
         ModifyGrades = new Button("Modify Grades");
+        goBack = new Button("Back");
 
         //display the buttons
         startview.add(FindStudents,15,5);
@@ -146,9 +152,9 @@ public class ProjectView {
     }
 
     public Parent asParentForModifyGrades(){
-        return gridPaneforAverages;
+        return gridPaneforModifyGrades;
     }
     public Parent asParentForAverages(){
-        return gridPaneforModifyGrades;
+        return gridPaneforAverages;
     }
 }

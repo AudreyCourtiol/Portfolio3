@@ -19,9 +19,12 @@ public class ProjectController {
         this.view=v;
         this.model=m;
         this.view.ExitBtn.setOnAction(e-> Platform.exit()); //exit button
+        this.view.GetAverages.setOnAction(e -> getAverages());
         this.view.FindStudents.setOnAction(e -> findStudentsPage()); //clear the page and offer new options
         this.view.ModifyGrades.setOnAction(e -> modifyGrades());
-        this.view.GetAverages.setOnAction(e -> getAverages());
+
+        this.view.goBack.setOnAction(e -> goBack());
+
 
 
         this.model.connectToTrainData();
@@ -34,6 +37,11 @@ public class ProjectController {
 
         //    this.model.SQLQueryStationNames();
         //view.configure();
+    }
+
+    void goBack(){
+        this.view.primaryStage.setScene(this.view.primaryScene);
+        this.view.primaryStage.show();
     }
 
     void findStudentsPage(){ //we display the scene with the students' informations
@@ -56,25 +64,61 @@ public class ProjectController {
 
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldCourses = new TextArea();
+        this.view.textfieldCourses.setMaxWidth(200);
+        this.view.textfieldCourses.setMaxHeight(100);
         this.view.textfieldGrades = new TextArea();
+        this.view.textfieldGrades.setMaxWidth(200);
+        this.view.textfieldGrades.setMaxHeight(100);
         this.view.gridPaneForStudents.add(this.view.textfieldCourses,1,20,2,2);
         this.view.gridPaneForStudents.add(this.view.textfieldGrades,1,70,2,2);
 
-        this.view.goBack = new Button("Back");
         this.view.gridPaneForStudents.add(this.view.goBack,40,80);
 
     }
 
     void modifyGrades(){
+        this.view.primaryStage.setScene(this.view.modifyGradesScene);
+        this.view.primaryStage.show();
+
+        //add the rules for this page
+        Label rulesForModifying = new Label("Here you can select a student. If they have a grade that hasn't been entered yet, you can do it.");
+        this.view.gridPaneforModifyGrades.add(rulesForModifying, 1, 1);
+
+        //This allows us to choose an option on a list
+        this.view.selectStudentsCB = new ComboBox<>();
+        this.view.gridPaneforModifyGrades.add(this.view.selectStudentsCB,30,1);
+
+        this.view.textfieldModifyGrades = new TextArea();
+        this.view.textfieldModifyGrades.setMaxWidth(200);
+        this.view.textfieldModifyGrades.setMaxHeight(100);
+        this.view.gridPaneforModifyGrades.add(this.view.textfieldModifyGrades,1,20,2,2);
 
 
-
-        this.view.goBack = new Button("Back");
         this.view.gridPaneforModifyGrades.add(this.view.goBack,40,80);
     }
 
     void getAverages(){
-        this.view.goBack = new Button("Back");
+        this.view.primaryStage.setScene(this.view.averagesScene);
+        this.view.primaryStage.show();
+
+        //Get the overall average of a student
+        Label rulesStudentAverage = new Label("Here you can select a student to get their overall average grade of all the courses they attend: ");
+        this.view.gridPaneforAverages.add(rulesStudentAverage, 1, 1);
+        //This allows us to choose an option on a list
+        this.view.selectStudentsCB = new ComboBox<>();
+        this.view.gridPaneforAverages.add(this.view.selectStudentsCB,30,1);
+
+        //We display textfields where we will print out the name of the courses and the student's grades
+        this.view.textfieldAverageOfCourse = new TextArea();
+        this.view.textfieldAverageOfCourse.setMaxWidth(200);
+        this.view.textfieldAverageOfCourse.setMaxHeight(100);
+        this.view.textfieldAverageOfStudent = new TextArea();
+        this.view.textfieldAverageOfStudent.setMaxWidth(200);
+        this.view.textfieldAverageOfStudent.setMaxHeight(100);
+        this.view.gridPaneforAverages.add(this.view.textfieldAverageOfCourse,1,20,2,2);
+        this.view.gridPaneforAverages.add(this.view.textfieldAverageOfStudent,1,70,2,2);
+
+
         this.view.gridPaneforAverages.add(this.view.goBack,40,80);
     }
 
