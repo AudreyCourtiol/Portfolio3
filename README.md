@@ -63,9 +63,47 @@ P.ProfessorID as PID,
 --if grade = null, type in grade
 
 --get average grade of a student
-SELECT AVG(StudentID)
-FROM Grade;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=1;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=2;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=3;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=4;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=5;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=6;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=7;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=8;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=9;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=10;
+
+SELECT AVG(Grade)
+FROM Grade where StudentID=11;
 
 --get average grade in a course
-SELECT AVG(CourseID)
-FROM Grade;
+
+SELECT AVG(Grade)
+FROM Grade where CourseID=1;
+
+SELECT AVG(Grade)
+FROM Grade where CourseID=2;
+
+SELECT AVG(Grade)
+FROM Grade where CourseID=3;
