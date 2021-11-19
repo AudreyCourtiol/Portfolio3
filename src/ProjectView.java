@@ -7,6 +7,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
+import javafx.collections.ObservableList;
 
 public class ProjectView {
     //a gridPane is the thing on which you display your labels, buttons, text fields ect
@@ -52,12 +53,10 @@ public class ProjectView {
     ComboBox<Integer> MinutesComB;*/
     TextArea textfield;
 
-    /*
-    ObservableList<String> stations;
-    ObservableList<Integer> hours;
-    ObservableList<Integer> minutes;*/
-
     ObservableList<String> students;
+    ObservableList<String> courses;
+    ObservableList<String> professors;
+    ObservableList<Double> grades;
 
     public ProjectView(Stage primaryStage){
         //initialization of the window

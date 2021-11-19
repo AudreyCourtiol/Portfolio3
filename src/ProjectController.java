@@ -18,6 +18,12 @@ public class ProjectController {
     public ProjectController(ProjectView v, ProjectModel m) throws SQLException {
         this.view=v;
         this.model=m;
+
+        // we get the data from the database
+        this.model.connectData();
+        this.model.createStatement();
+
+        //we set the actions for our buttons
         this.view.ExitBtn.setOnAction(e-> Platform.exit()); //exit button
         this.view.GetAverages.setOnAction(e -> getAverages());
         this.view.FindStudents.setOnAction(e -> findStudentsPage()); //clear the page and offer new options
@@ -29,6 +35,11 @@ public class ProjectController {
 
         this.model.closeCourseDataConnection();
         this.model.createStatement();
+
+        //Put students' data in view
+        this.view.students = getStudents();
+
+
         //this.view.stations =getStations();
         //this.view.hours=getHours();
         //this.view.minutes=getMinutes();
@@ -120,6 +131,12 @@ public class ProjectController {
 
 
         this.view.gridPaneforAverages.add(this.view.goBack,40,80);
+    }
+
+    public ObservableList<String> getStudents() throws SQLException {
+        ArrayList<String> students = model.SQLQueryStudents();
+        ObservableList<String> studentnames= FXCollections.observableArrayList(students);
+        return studentnames;
     }
 
 /*

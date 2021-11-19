@@ -7,10 +7,12 @@ public class ProjectModel {
     String url=null;
     ResultSet rs=null;
     Statement stmt=null;
-    ProjectModel(String url){
+
+    public ProjectModel(String url){
         this.url=url;
     }
-    void connectCourseData()throws SQLException {
+
+    void connectData()throws SQLException {
         conn= DriverManager.getConnection(url);
     }
     void closeCourseDataConnection()throws SQLException{
@@ -20,9 +22,9 @@ public class ProjectModel {
         this.stmt=conn.createStatement();
     }
 
-    //Gives all student names
-    ArrayList<String> SQLQueryStudentNames() throws SQLException{
-        ArrayList<String> students=new ArrayList<>();
+    //Gives all student names from database
+    ArrayList<String> SQLQueryStudents() throws SQLException{
+        ArrayList<String> students =new ArrayList<>();
         String sql = "Select StudentName from Student";
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
