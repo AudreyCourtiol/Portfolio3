@@ -15,22 +15,22 @@ public class ProjectModel {
         this.url = url;
     }
 
-    void connectData() throws SQLException {
+    public void connectData() throws SQLException {
         conn = DriverManager.getConnection(url);
     }
 
-    void closeCourseDataConnection() throws SQLException {
+    public void closeCourseDataConnection() throws SQLException {
         conn.close();
     }
 
-    void createStatement() throws SQLException {
+    public void createStatement() throws SQLException {
         this.stmt = conn.createStatement();
     }
 
     //**** QUERY ****//
 
     //Gives all student names from database
-    ArrayList<String> SQLQueryStudents() throws SQLException {
+    public ArrayList<String> SQLQueryStudents() throws SQLException {
         ArrayList<String> students = new ArrayList<>();
         // language=<SQL>
         String sql = "Select StudentName from Student";
@@ -44,7 +44,7 @@ public class ProjectModel {
     }
 
     //Gives all courses names
-    ArrayList<String> SQLQueryCourseNames() throws SQLException {
+    public ArrayList<String> SQLQueryCourseNames() throws SQLException {
         ArrayList<String> course = new ArrayList<>();
         // language=<SQL>
         String sql = "Select CourseName from Course";
@@ -58,7 +58,7 @@ public class ProjectModel {
     }
 
     //Gives all grades
-    ArrayList<Double> SQLQueryGrades() throws SQLException {
+    public ArrayList<Double> SQLQueryGrades() throws SQLException {
         ArrayList<Double> grades = new ArrayList<>();
         // language=<SQL>
         String sql = "Select Grade from Grade";
@@ -72,7 +72,7 @@ public class ProjectModel {
     }
 
     //Gives all professors names
-    ArrayList<String> SQLQueryProfessorName() throws SQLException {
+    public ArrayList<String> SQLQueryProfessorName() throws SQLException {
         ArrayList<String> prof = new ArrayList<>();
         // language=<SQL>
         String sql = "Select ProfessorName from Professor";
@@ -178,7 +178,7 @@ public class ProjectModel {
     }
 
     //Query where if grade is null than you can type in a grade
-    Double UpdateGrade(int StudentID) throws SQLException {
+    public Double UpdateGrade(int StudentID) throws SQLException {
         double g = 0;
         System.out.println("Grade is null please insert actual grade: ");
         g = in.nextInt();
@@ -194,7 +194,7 @@ public class ProjectModel {
     }
 
     //Query where we get the average grade of a student
-    Double StudentAverage(int StudentID) throws SQLException {
+    public Double StudentAverage(int StudentID) throws SQLException {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where StudentID=" + StudentID + ";";
@@ -209,7 +209,7 @@ public class ProjectModel {
     }
 
     //Query where we get the average grade in a course
-    Double CourseAverage(int CourseID) throws SQLException {
+    public Double CourseAverage(int CourseID) throws SQLException {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where CourseID=" + CourseID + ";";
