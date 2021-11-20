@@ -40,10 +40,19 @@ public class ProjectModel {
 
     //Query n°4
     //get average grade of a student
-    void StudentAverage(int StudentID) throws SQLException {
+    Double StudentAverage(int StudentID) throws SQLException {
+
+        double average = 0;
+
         // language=<SQL>
         String sql="SELECT AVG(Grade) FROM Grade where StudentID="+ StudentID +";";
-        rs=stmt.executeQuery(sql);
+        pstmt=conn.prepareStatement(sql);
+        rs=pstmt.executeQuery();
+
+        while(rs!=null && rs.next()){
+            average = rs.getDouble(1);;
+        }
+        return average;
     }
 
     //Query n°5

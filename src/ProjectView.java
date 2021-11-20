@@ -40,17 +40,13 @@ public class ProjectView {
     //average grade on a selected course
     TextArea textfieldAverageOfCourse;
     TextArea textfieldAverageOfStudent;
+    ComboBox<String> selectCourseCB;
 
 
     Scene modifyGradesScene;
     GridPane gridPaneforModifyGrades;
     TextArea textfieldModifyGrades;
 
-    /*
-    ComboBox<String> StartStationComB;
-    ComboBox<String> EndStationComB;
-    ComboBox<Integer> HoursComB;
-    ComboBox<Integer> MinutesComB;*/
     TextArea textfield;
 
     ObservableList<String> students;
@@ -103,22 +99,6 @@ public class ProjectView {
         startview.add(ModifyGrades,25,5);
         startview.add(ExitBtn,40,20);
     }
-
-    /*
-    public void configure(){
-        StartStationComB.setItems(stations);
-        StartStationComB.getSelectionModel().selectFirst();
-
-        EndStationComB.setItems(stations);
-        EndStationComB.getSelectionModel().selectFirst();
-
-        HoursComB.setItems(hours);
-        HoursComB.getSelectionModel().selectFirst();
-
-        MinutesComB.setItems(minutes);
-        MinutesComB.getSelectionModel().selectFirst();
-
-    }*/
 
     public Parent asParentForPrimaryScene(){
         return  startview;

@@ -195,10 +195,16 @@ public class ProjectController {
         this.view.gridPaneforAverages.add(rulesStudentAverage, 1, 1);
         //This allows us to choose an option on a list
         this.view.selectStudentsCB = new ComboBox<>();
-        this.view.gridPaneforAverages.add(this.view.selectStudentsCB,30,1);
+        this.view.gridPaneforAverages.add(this.view.selectStudentsCB,30,4);
         //We put in the list the data from the database
         this.view.selectStudentsCB.setItems(getStudents());
         this.view.selectStudentsCB.getSelectionModel().selectFirst();
+
+        Label rulesforCourses = new Label("Here you can select a course and see the average grade in said course");
+        //this.view.gridPaneforAverages.add(rulesforCourses, 10, 1);
+        //This allows us to choose an option on a list
+        this.view.selectCourseCB = new ComboBox<>();
+        this.view.gridPaneforAverages.add(this.view.selectCourseCB,30,20);
 
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldAverageOfCourse = new TextArea();
@@ -211,7 +217,7 @@ public class ProjectController {
         this.view.gridPaneforAverages.add(this.view.textfieldAverageOfStudent,1,70,2,2);
 
 
-        this.view.gridPaneforAverages.add(this.view.goBack,40,80);
+        this.view.gridPaneforAverages.add(this.view.goBack,100,100);
     }
 
     public ObservableList<String> getStudents() throws SQLException {
