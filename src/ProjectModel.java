@@ -155,25 +155,32 @@ public class ProjectModel {
         return courseID;
     }
 
-    //This method gets the name of a course thanks to the Student ID
-    public ArrayList<String> QueryForCourseName(Integer courseID) throws SQLException{
+    //This method gets the name of a course thanks to the course ID
+    public ArrayList<String> QueryForCourseName(ArrayList<Integer> courseID) throws SQLException{
 
         ArrayList<String> courseName =new ArrayList<>();
 
-        //This is the sql line that gets us the information of the student
         // language=<SQL>
-        String sql = "SELECT CourseName from Course WHERE CourseID ='"+ courseID + "';";
+        ArrayList<String> sql = new ArrayList<>();
 
-        pstmt=conn.prepareStatement(sql);
-        rs=pstmt.executeQuery();
-
-        while(rs!=null && rs.next()){
-            String name =rs.getString(1); //we get the course ID
-            // language=<SQL>
-
-            courseName.add(name);
+        //For every course ID we have, we go and get the course name associated
+        for(int i = 0; i < courseID.size(); i++){
+            sql.add("SELECT CourseName from Course WHERE CourseID ='"+ courseID.get(i) + "';");
         }
+
+        //For every sql query, we get the course name in our result
+        for(int i = 0; i < sql.size(); i++){
+            pstmt=conn.prepareStatement(sql.get(i));
+            rs=pstmt.executeQuery();
+
+            while(rs!=null && rs.next()){
+
+                String name =rs.getString(1); //we get the course ID
+
+                courseName.add(name);
+            }
+        }
+
         return courseName;
     }
-
 }

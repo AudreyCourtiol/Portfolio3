@@ -133,17 +133,14 @@ public class ProjectController {
             System.out.println("course id is " + coursesID.get(0));
             System.out.println("course id is " + coursesID.get(1));
 
-            ArrayList<String> coursesNames = new ArrayList<>();
-
             //We get all the courses names to all the course IDs found
-            for (int i = 0; i < coursesID.size(); i++) {
-                    coursesNames = model.QueryForCourseName(coursesID.get(i));
-            }
+            ArrayList<String> coursesNames = model.QueryForCourseName(coursesID);
+
             System.out.println(coursesNames.size() + " = " + coursesID.size());
 
             //We print the info of coursesNames in textfield
             for (int i = 0; i < coursesNames.size(); i++) {
-                    this.view.textfieldCourses.appendText(i + ":" + coursesNames.get(i));
+                    this.view.textfieldCourses.appendText(i + ":" + coursesNames.get(i) + "\n");
             }
 
 
