@@ -96,6 +96,7 @@ public class ProjectController {
         this.view.seeCourses = new Button("See courses");
         this.view.seeGrades = new Button("See grades");
         this.view.seeCourses.setOnAction(e -> printCoursesTakenByStudent(this.view.selectStudentsCB.getValue()));
+        this.view.seeGrades.setOnAction(e -> printGradesOfChosenStudent(this.view.selectStudentsCB.getValue()));
 
         this.view.gridPaneForStudents.add(this.view.seeCourses, 1, 7); ///mettre à la bonne place
         this.view.gridPaneForStudents.add(this.view.seeGrades, 1, 60);
@@ -120,11 +121,6 @@ public class ProjectController {
     //This method prints out the courses taken by the student chosen
     void printCoursesTakenByStudent(String studentName) {
 
-        //get student ID
-        //get course ID
-        //get course name
-        //print out course name in textfield for courses
-
         try {
             ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
 
@@ -143,11 +139,27 @@ public class ProjectController {
                     this.view.textfieldCourses.appendText(i + ":" + coursesNames.get(i) + "\n");
             }
 
-
         }catch(SQLException e ){
                 System.out.println(e.getMessage());
                 System.out.println("error in controller: " + e.getMessage());
+        }
+    }
+
+    void printGradesOfChosenStudent(String studentName){
+        try {
+            ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
+
+            ArrayList<Double> Grades = model.QueryForGrades(student.get(0).studentID);
+
+            //We print the info of coursesNames in textfield
+            for (int i = 0; i < Grades.size(); i++) {
+                this.view.textfieldGrades.appendText(i + ":" + Grades.get(i) + "\n");
             }
+
+        }catch(SQLException e ){
+            System.out.println(e.getMessage());
+            System.out.println("error in controller: " + e.getMessage());
+        }
     }
 
     void modifyGrades() throws SQLException {

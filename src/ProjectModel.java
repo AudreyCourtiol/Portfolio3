@@ -183,4 +183,24 @@ public class ProjectModel {
 
         return courseName;
     }
+
+    //Query for grades depending on student id
+    public ArrayList<Double> QueryForGrades(Integer StudentID) throws SQLException {
+
+        ArrayList<Double> grades = new ArrayList<>();
+
+        //This is the sql line that gets us the information of the student
+        // language=<SQL>
+        String sql = "SELECT Grade from Grade WHERE StudentID ='" + StudentID + "';";
+
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+
+        while (rs != null && rs.next()) {
+            double grade = rs.getDouble(1); //we get the course ID
+
+            grades.add(grade);
+        }
+        return grades;
+    }
 }
