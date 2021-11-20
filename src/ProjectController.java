@@ -118,7 +118,7 @@ public class ProjectController {
     }
 
     //This method prints out the courses taken by the student chosen
-    void printCoursesTakenByStudent(String studentName){
+    void printCoursesTakenByStudent(String studentName) {
 
         //get student ID
         //get course ID
@@ -128,15 +128,29 @@ public class ProjectController {
         try {
             ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
 
-            ArrayList<String> coursesTaken = model.QueryForCourseName(student.get(0).studentID); //we get the courses taken by that student
+            ArrayList<Integer> coursesID = model.QueryForCourseID(student.get(0).studentID); //we get the courses taken by that student
 
-            for (int i = 0; i < coursesTaken.size(); i++) {
-                this.view.textfieldCourses.appendText(i + ":" + coursesTaken.get(i));
+            System.out.println("course id is " + coursesID.get(0));
+            System.out.println("course id is " + coursesID.get(1));
+
+            ArrayList<String> coursesNames = new ArrayList<>();
+
+            //We get all the courses names to all the course IDs found
+            for (int i = 0; i < coursesID.size(); i++) {
+                    coursesNames = model.QueryForCourseName(coursesID.get(i));
+            }
+            System.out.println(coursesNames.size() + " = " + coursesID.size());
+
+            //We print the info of coursesNames in textfield
+            for (int i = 0; i < coursesNames.size(); i++) {
+                    this.view.textfieldCourses.appendText(i + ":" + coursesNames.get(i));
             }
 
-        }catch (SQLException e ){
-            System.out.println(e.getMessage());
-        }
+
+        }catch(SQLException e ){
+                System.out.println(e.getMessage());
+                System.out.println("error in controller: " + e.getMessage());
+            }
     }
 
     void modifyGrades() throws SQLException {
