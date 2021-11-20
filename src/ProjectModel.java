@@ -131,7 +131,6 @@ public class ProjectModel {
 
         while (rs != null && rs.next()) {
             int id = rs.getInt(1); //we get the course ID
-            // language=<SQL>
 
             courseID.add(id);
         }
@@ -145,8 +144,7 @@ public class ProjectModel {
 
         //This is the sql line that gets us the information of the student
         // language=<SQL>
-        String sql = "SELECT CourseName from Course"
-                + "WHERE CourseID ='"+ courseID + "';";
+        String sql = "SELECT CourseName from Course WHERE CourseID ='"+ courseID + "';";
 
         pstmt=conn.prepareStatement(sql);
         rs=pstmt.executeQuery();
