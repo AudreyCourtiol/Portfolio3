@@ -4,70 +4,34 @@ import java.util.Scanner;
 
 public class ProjectModel {
     Scanner in = new Scanner(System.in);
-    Connection conn=null;
+    Connection conn = null;
     String url;
-    ResultSet rs=null;
-    ResultSet rs2=null;
-    Statement stmt=null;
-    PreparedStatement pstmt=null;
+    ResultSet rs = null;
+    ResultSet rs2 = null;
+    Statement stmt = null;
+    PreparedStatement pstmt = null;
 
-    public ProjectModel(String url){
-        this.url=url;
+    public ProjectModel(String url) {
+        this.url = url;
     }
 
-    void connectData()throws SQLException {
-        conn= DriverManager.getConnection(url);
+    void connectData() throws SQLException {
+        conn = DriverManager.getConnection(url);
     }
-    void closeCourseDataConnection()throws SQLException{
+
+    void closeCourseDataConnection() throws SQLException {
         conn.close();
     }
-    void createStatement()throws SQLException{
-        this.stmt=conn.createStatement();
+
+    void createStatement() throws SQLException {
+        this.stmt = conn.createStatement();
     }
 
     //**** QUERY ****//
 
-    //Query n°3
-    //if grade = null, type in grade
-    void UpdateGrade(int StudentID) throws SQLException {
-        int g;
-        System.out.println("Grade is null please insert actual grade: ");
-        g=in.nextInt();
-        // language=<SQL>
-        String sql="UPDATE Grade SET Grade ="+ g +" WHERE Grade IS NULL AND StudentID ="+ StudentID +";";
-        rs=stmt.executeQuery(sql);
-    }
-
-    //Query n°4
-    //get average grade of a student
-    Double StudentAverage(int StudentID) throws SQLException {
-
-        double average = 0;
-
-        // language=<SQL>
-        String sql="SELECT AVG(Grade) FROM Grade where StudentID="+ StudentID +";";
-        pstmt=conn.prepareStatement(sql);
-        rs=pstmt.executeQuery();
-
-        while(rs!=null && rs.next()){
-            average = rs.getDouble(1);;
-        }
-        return average;
-    }
-
-    //Query n°5
-    //get average grade in a course
-    void CourseAverage(int CourseID) throws SQLException {
-        // language=<SQL>
-        String sql="SELECT AVG(Grade) FROM Grade where CourseID="+ CourseID +";";
-        rs=stmt.executeQuery(sql);
-    }
-
-    //** This is not a query needed: These are tests **//
-
     //Gives all student names from database
-    ArrayList<String> SQLQueryStudents() throws SQLException{
-        ArrayList<String> students =new ArrayList<>();
+    ArrayList<String> SQLQueryStudents() throws SQLException {
+        ArrayList<String> students = new ArrayList<>();
         // language=<SQL>
         String sql = "Select StudentName from Student";
         rs = stmt.executeQuery(sql);
@@ -80,8 +44,8 @@ public class ProjectModel {
     }
 
     //Gives all courses names
-    ArrayList<String> SQLQueryCourseNames() throws SQLException{
-        ArrayList<String> course=new ArrayList<>();
+    ArrayList<String> SQLQueryCourseNames() throws SQLException {
+        ArrayList<String> course = new ArrayList<>();
         // language=<SQL>
         String sql = "Select CourseName from Course";
         rs = stmt.executeQuery(sql);
@@ -94,8 +58,8 @@ public class ProjectModel {
     }
 
     //Gives all grades
-    ArrayList<Double> SQLQueryGrades() throws SQLException{
-        ArrayList<Double> grades=new ArrayList<>();
+    ArrayList<Double> SQLQueryGrades() throws SQLException {
+        ArrayList<Double> grades = new ArrayList<>();
         // language=<SQL>
         String sql = "Select Grade from Grade";
         rs = stmt.executeQuery(sql);
@@ -108,8 +72,8 @@ public class ProjectModel {
     }
 
     //Gives all professors names
-    ArrayList<String> SQLQueryProfessorName() throws SQLException{
-        ArrayList<String> prof=new ArrayList<>();
+    ArrayList<String> SQLQueryProfessorName() throws SQLException {
+        ArrayList<String> prof = new ArrayList<>();
         // language=<SQL>
         String sql = "Select ProfessorName from Professor";
         rs = stmt.executeQuery(sql);
@@ -122,29 +86,29 @@ public class ProjectModel {
     }
 
     //This method gets the information about a student thanks to their name
-    public ArrayList<StudentInfo> QueryforStudent(String name) throws SQLException{
+    public ArrayList<StudentInfo> QueryforStudent(String name) throws SQLException {
 
-        ArrayList<StudentInfo> studentInfo =new ArrayList<>();
+        ArrayList<StudentInfo> studentInfo = new ArrayList<>();
 
         //This is the sql line that gets us the information of the student
         // language=<SQL>
-        String sql = "SELECT StudentID, StudentAddress from Student WHERE StudentName='"+ name + "';";
+        String sql = "SELECT StudentID, StudentAddress from Student WHERE StudentName='" + name + "';";
 
-        pstmt=conn.prepareStatement(sql);
-        rs=pstmt.executeQuery();
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
 
-        while(rs!=null && rs.next()){
-            String address =rs.getString(2);
-            Integer id =rs.getInt(1);
+        while (rs != null && rs.next()) {
+            String address = rs.getString(2);
+            Integer id = rs.getInt(1);
 
-            System.out.println(name + ": "+ address + " and id is "+ id); //we print out the information we got
+            System.out.println(name + ": " + address + " and id is " + id); //we print out the information we got
             StudentInfo t = new StudentInfo(id, name, address);
             studentInfo.add(t);
         }
         return studentInfo;
     }
 
-    //Query for course ID
+    //Query where we get course ID from the student ID
     public ArrayList<Integer> QueryForCourseID(Integer StudentID) throws SQLException {
 
         ArrayList<Integer> courseID = new ArrayList<>();
@@ -165,26 +129,26 @@ public class ProjectModel {
     }
 
     //This method gets the name of a course thanks to the course ID
-    public ArrayList<String> QueryForCourseName(ArrayList<Integer> courseID) throws SQLException{
+    public ArrayList<String> QueryForCourseName(ArrayList<Integer> courseID) throws SQLException {
 
-        ArrayList<String> courseName =new ArrayList<>();
+        ArrayList<String> courseName = new ArrayList<>();
 
         // language=<SQL>
         ArrayList<String> sql = new ArrayList<>();
 
         //For every course ID we have, we go and get the course name associated
-        for(int i = 0; i < courseID.size(); i++){
-            sql.add("SELECT CourseName from Course WHERE CourseID ='"+ courseID.get(i) + "';");
+        for (int i = 0; i < courseID.size(); i++) {
+            sql.add("SELECT CourseName from Course WHERE CourseID ='" + courseID.get(i) + "';");
         }
 
         //For every sql query, we get the course name in our result
-        for(int i = 0; i < sql.size(); i++){
-            pstmt=conn.prepareStatement(sql.get(i));
-            rs=pstmt.executeQuery();
+        for (int i = 0; i < sql.size(); i++) {
+            pstmt = conn.prepareStatement(sql.get(i));
+            rs = pstmt.executeQuery();
 
-            while(rs!=null && rs.next()){
+            while (rs != null && rs.next()) {
 
-                String name =rs.getString(1); //we get the course ID
+                String name = rs.getString(1); //we get the course ID
 
                 courseName.add(name);
             }
@@ -193,7 +157,7 @@ public class ProjectModel {
         return courseName;
     }
 
-    //Query for grades depending on student id
+    //Query where we get grade from the student ID
     public ArrayList<Double> QueryForGrades(Integer StudentID) throws SQLException {
 
         ArrayList<Double> grades = new ArrayList<>();
@@ -211,5 +175,50 @@ public class ProjectModel {
             grades.add(grade);
         }
         return grades;
+    }
+
+    //Query where if grade is null than you can type in a grade
+    Double UpdateGrade(int StudentID) throws SQLException {
+        double g = 0;
+        System.out.println("Grade is null please insert actual grade: ");
+        g = in.nextInt();
+        // language=<SQL>
+        String sql = "UPDATE Grade SET Grade =" + g + " WHERE Grade IS NULL AND StudentID =" + StudentID + ";";
+        pstmt = conn.prepareStatement(sql);
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            g = rs.getDouble(1);
+            ;
+        }
+        return g;
+    }
+
+    //Query where we get the average grade of a student
+    Double StudentAverage(int StudentID) throws SQLException {
+        double average = 0;
+        // language=<SQL>
+        String sql = "SELECT AVG(Grade) FROM Grade where StudentID=" + StudentID + ";";
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+
+        while (rs != null && rs.next()) {
+            average = rs.getDouble(1);
+            ;
+        }
+        return average;
+    }
+
+    //Query where we get the average grade in a course
+    Double CourseAverage(int CourseID) throws SQLException {
+        double average = 0;
+        // language=<SQL>
+        String sql = "SELECT AVG(Grade) FROM Grade where CourseID=" + CourseID + ";";
+        pstmt = conn.prepareStatement(sql);
+        rs = stmt.executeQuery(sql);
+        while (rs != null && rs.next()) {
+            average = rs.getDouble(1);
+            ;
+        }
+        return average;
     }
 }
