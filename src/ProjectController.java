@@ -221,6 +221,40 @@ public class ProjectController {
 
 
         this.view.gridPaneforAverages.add(this.view.goBack,100,20);
+
+
+        //Now we act
+        printAverageOfStudent(this.view.selectStudentsCB.getValue());
+        printAverageOfCourse(this.view.selectStudentsCB.getValue());
+    }
+
+    void printAverageOfStudent(String studentName){
+        try{
+            ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the student id
+
+            Double studentAverage = model.QueryStudentAverage(student.get(0).studentID); //we get the average connected to this student id
+
+            this.view.textfieldAverageOfStudent.appendText( "The average of " + studentName + " is " + studentAverage + "\n");
+
+        }catch(SQLException e ){
+            System.out.println(e.getMessage());
+            System.out.println("error in controller: " + e.getMessage());
+        }
+    }
+
+    void printAverageOfCourse(String courseName){
+        try{
+            ArrayList<CourseInfo> course = model.QueryforCourse(courseName); //we get the course id
+            System.out.println(course.size());
+
+            Double courseAverage = model.QueryCourseAverage(course.get(1).courseID); //we get the average connected to this student id
+
+            this.view.textfieldAverageOfCourse.appendText( "The average in " + courseName + " is " + courseAverage + "\n");
+
+        }catch(SQLException e ){
+            System.out.println(e.getMessage());
+            System.out.println("error in controller: " + e.getMessage());
+        }
     }
 
     public ObservableList<String> getStudents() throws SQLException {

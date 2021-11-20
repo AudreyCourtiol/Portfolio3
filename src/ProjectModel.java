@@ -108,6 +108,28 @@ public class ProjectModel {
         return studentInfo;
     }
 
+    //This method gets the information about a student thanks to their name
+    public ArrayList<CourseInfo> QueryforCourse(String name) throws SQLException {
+
+        ArrayList<CourseInfo> courseInfo = new ArrayList<>();
+
+        //This is the sql line that gets us the information of the student
+        // language=<SQL>
+        String sql = "SELECT CourseID from Course WHERE CourseName ='" + name + "';";
+
+        pstmt = conn.prepareStatement(sql);
+        rs = pstmt.executeQuery();
+
+        while (rs != null && rs.next()) {
+            Integer id = rs.getInt(1);
+            System.out.println("course id " + id);
+
+            CourseInfo t = new CourseInfo(id, name);
+            courseInfo.add(t);
+        }
+        return courseInfo;
+    }
+
     //Query where we get course ID from the student ID
     public ArrayList<Integer> QueryForCourseID(Integer StudentID) throws SQLException {
 
@@ -194,7 +216,7 @@ public class ProjectModel {
     }
 
     //Query where we get the average grade of a student
-    public Double StudentAverage(int StudentID) throws SQLException {
+    public Double QueryStudentAverage(int StudentID) throws SQLException {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where StudentID=" + StudentID + ";";
@@ -209,7 +231,7 @@ public class ProjectModel {
     }
 
     //Query where we get the average grade in a course
-    public Double CourseAverage(int CourseID) throws SQLException {
+    public Double QueryCourseAverage(int CourseID) throws SQLException {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where CourseID=" + CourseID + ";";
