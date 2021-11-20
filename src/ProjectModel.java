@@ -27,16 +27,34 @@ public class ProjectModel {
 
     //**** QUERY ****//
 
+    //Query n°3
     //if grade = null, type in grade
-    void UpdateGrade() throws SQLException {
+    void UpdateGrade(int StudentID) throws SQLException {
         int g;
         System.out.println("Grade is null please insert actual grade: ");
         g=in.nextInt();
         // language=<SQL>
-        String sql="UPDATE Grade SET Grade ="+ g+ " WHERE Grade IS NULL;";
+        String sql="UPDATE Grade SET Grade ="+ g +" WHERE Grade IS NULL AND StudentID ="+ StudentID +";";
         rs=stmt.executeQuery(sql);
     }
 
+    //Query n°4
+    //get average grade of a student
+    void StudentAverage(int StudentID) throws SQLException {
+        // language=<SQL>
+        String sql="SELECT AVG(Grade) FROM Grade where StudentID="+ StudentID +";";
+        rs=stmt.executeQuery(sql);
+    }
+
+    //Query n°5
+    //get average grade in a course
+    void CourseAverage(int CourseID) throws SQLException {
+        // language=<SQL>
+        String sql="SELECT AVG(Grade) FROM Grade where CourseID="+ CourseID +";";
+        rs=stmt.executeQuery(sql);
+    }
+
+    //** This is not a query needed: These are tests **//
 
     //Gives all student names from database
     ArrayList<String> SQLQueryStudents() throws SQLException{
