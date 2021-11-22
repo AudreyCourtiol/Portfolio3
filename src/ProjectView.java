@@ -5,6 +5,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import javafx.collections.ObservableList;
@@ -46,6 +47,9 @@ public class ProjectView {
     Scene modifyGradesScene;
     GridPane gridPaneforModifyGrades;
     TextArea textfieldModifyGrades;
+    TextArea textfieldEnterGrade;
+    Button enterGrade;
+    Button ok;
 
     TextArea textfield;
 

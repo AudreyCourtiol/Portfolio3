@@ -1,14 +1,14 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextArea;
-import javafx.scene.layout.StackPane;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.control.*;
 
+import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.concurrent.atomic.AtomicReference;
 
 public class ProjectController {
     ProjectView view;
@@ -172,21 +172,34 @@ public class ProjectController {
 
         //This allows us to choose an option on a list
         this.view.selectStudentsCB = new ComboBox<>();
-        this.view.gridPaneforModifyGrades.add(this.view.selectStudentsCB,30,1);
+        this.view.gridPaneforModifyGrades.add(this.view.selectStudentsCB,1,2);
         //We put in the list the data from the database
         this.view.selectStudentsCB.setItems(getStudents());
         this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
+        this.view.enterGrade = new Button("Enter grade");
+        this.view.gridPaneforModifyGrades.add(this.view.enterGrade, 1, 3, 1 ,1);
+        //We call the method that will tell us whether we can modify the grade or not
+        this.view.enterGrade.setOnAction(e -> modifyGradeOfChosenStudent(this.view.selectStudentsCB.getValue()));
+
+
+        this.view.ok = new Button("Ok");
+        this.view.gridPaneforModifyGrades.add(this.view.ok, 2, 6, 1 ,1);
+
+
         this.view.textfieldModifyGrades = new TextArea();
-        this.view.textfieldModifyGrades.setMaxWidth(200);
+        this.view.textfieldModifyGrades.setMaxWidth(400);
         this.view.textfieldModifyGrades.setMaxHeight(100);
-        this.view.gridPaneforModifyGrades.add(this.view.textfieldModifyGrades,1,20,2,2);
+        this.view.gridPaneforModifyGrades.add(this.view.textfieldModifyGrades,1,4,1,1);
+
+        //the textfield in which only the new grade will be typed
+        this.view.textfieldEnterGrade = new TextArea();
+        this.view.textfieldEnterGrade.setMaxWidth(200);
+        this.view.textfieldEnterGrade.setMaxHeight(100);
+        this.view.gridPaneforModifyGrades.add(this.view.textfieldEnterGrade,2,5,1,1);
 
 
-        this.view.gridPaneforModifyGrades.add(this.view.goBack,40,80);
-
-        //We call the method that will print out the average of the student
-        modifyGradeOfChosenStudent(this.view.selectStudentsCB.getValue());
+        this.view.gridPaneforModifyGrades.add(this.view.goBack,1,6);
     }
 
     void modifyGradeOfChosenStudent(String studentName){
@@ -196,20 +209,55 @@ public class ProjectController {
             //We get all the grades of the student
             ArrayList<Double> Grades = model.QueryForGrades(student.get(0).studentID);
 
+            ArrayList<Integer> coursesID = model.QueryForCourseID(student.get(0).studentID);
+
+            ArrayList<String> courseNames = model.QueryForCourseName(coursesID);
             Double grade;
 
            //We go through the grades
             for (int i = 0; i < Grades.size(); i++) {
-                //If the grade is null
-                if(Grades.get(i) == null){
+                System.out.println("the current grade is " + Grades.get(i));
 
-                    //
-                    grade = model.UpdateGrade(student.get(0).studentID);
+                //If the grade is null
+                if(Grades.get(i) == 0){
+
+                    this.view.textfieldModifyGrades.appendText("You can modify the grade for " + courseNames.get(i) + "\n");
+                    this.view.textfieldModifyGrades.appendText("Please insert the grade you want to add in the other textfield.\n");
+
+                    //We display in the console the grade typed by the user
+                    this.view.ok.setOnAction(e -> System.out.println("Grade: " + this.view.textfieldEnterGrade.getText()));
+                    String input = "ERROR";
+
+                    //As long as the grade hasn't been entered, we wait
+                    while(!this.view.ok.isPressed()){
+                        int a = 0;
+                        a++;
+                    }
+
+                    if(this.view.ok.isPressed()){
+                        //We get the input and translate it to a double
+
+                        Console cnsl = System.console();
+
+                        if(cnsl != null){
+                            input = cnsl.readLine("Grade: "); //we get the grade from the console
+                        }
+                    }
+
+                    grade = Double.parseDouble(input); //we translate the grade from a string to a double
+
+
+                    model.UpdateGrade(grade, student.get(0).studentID); //we modify the grade in the database
+
+                    this.view.textfieldModifyGrades.appendText(i + ": new grade is " + grade + "\n");
+
+                }else{ //ca se met pas a jour a chaque fois que je selectionne un nouvel etudiant
+                    this.view.textfieldModifyGrades.appendText("there is no grade to fill out for this student\n");
                 }
             }
 
 
-            //this.view.textfieldAverageOfStudent.appendText(i + ":" + Grades.get(i) + "\n");
+
         }catch(SQLException e ){
             System.out.println(e.getMessage());
             System.out.println("error in controller: " + e.getMessage());
