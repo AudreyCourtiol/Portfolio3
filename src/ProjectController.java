@@ -8,6 +8,7 @@ import javafx.scene.control.*;
 import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Scanner;
 
 public class ProjectController {
     ProjectView view;
@@ -212,12 +213,13 @@ public class ProjectController {
 
             ArrayList<String> courseNames = model.QueryForCourseName(coursesID);
 
+            boolean ismodify = false;
            //We go through the grades
             for (int i = 0; i < Grades.size(); i++) {
 
                 //If the grade is null
                 if(Grades.get(i) == 0){
-
+                    ismodify = true;
                     this.view.textfieldModifyGrades.appendText("You can modify the grade for " + courseNames.get(i) + "\n");
                     this.view.textfieldModifyGrades.appendText("Please insert the grade you want to add in the other textfield.\n");
 
@@ -236,10 +238,13 @@ public class ProjectController {
                         }
                     });
 
-                }else{
-                    this.view.textfieldModifyGrades.appendText("there is no grade to fill out for this student\n");
                 }
             }
+
+            if(!ismodify){
+                this.view.textfieldModifyGrades.appendText("there is no grade to fill out for this student\n");
+            }
+
         }catch(SQLException e ){
             System.out.println(e.getMessage());
             System.out.println("error in controller: " + e.getMessage());
@@ -250,20 +255,13 @@ public class ProjectController {
         //We get the input and translate it to a double
         System.out.println("Grade: " + this.view.textfieldEnterGrade.getText());
 
-        String input = "";
-        Console cnsl = System.console();
+        String input = this.view.textfieldEnterGrade.getText();
+        double g = Double.parseDouble(input);
 
-        if(cnsl != null){
-            input = cnsl.readLine("Grade: "); //we get the grade from the console
-        }
-
-        double grade = Double.parseDouble(input); //we translate the grade from a string to a double
-
-        model.UpdateGrade(grade, studentID);
+        model.UpdateGrade(g, studentID);
 
         //We display the grade entered again to confirm it was taken into account
-        this.view.textfieldModifyGrades.appendText("New grade is " + grade + "\n");
-
+        this.view.textfieldModifyGrades.appendText("New grade is " + g + "\n");
     }
 
     void getAverages() throws SQLException {
