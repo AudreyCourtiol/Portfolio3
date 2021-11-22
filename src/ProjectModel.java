@@ -118,19 +118,21 @@ public class ProjectModel {
         String sql = "SELECT CourseID from Course WHERE CourseName ='" + name + "';";
 
         pstmt = conn.prepareStatement(sql);
-        rs = pstmt.executeQuery();
+        try (ResultSet resultSet = rs = pstmt.executeQuery()) {
+            while (rs != null && rs.next()) {
+                Integer id = rs.getInt(1);
+                System.out.println("course id " + id);
+
+                CourseInfo t = new CourseInfo(id, name);
+                courseInfo.add(t);
+            }
+        }
 
         if(!rs.next()){
             System.out.println("ya pas de next");
         }
 
-        while (rs != null && rs.next()) {
-            Integer id = rs.getInt(1);
-            System.out.println("course id " + id);
 
-            CourseInfo t = new CourseInfo(id, name);
-            courseInfo.add(t);
-        }
         return courseInfo;
     }
 

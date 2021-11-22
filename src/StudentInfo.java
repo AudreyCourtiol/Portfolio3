@@ -9,6 +9,4 @@ public class StudentInfo {
         this.studentName = name;
         this.studentAddress = address;
     }
-
-    public Integer getStudentID(){return this.studentID; }
 }

@@ -278,6 +278,11 @@ public class ProjectController {
         this.view.selectStudentsCB.setItems(getStudents());
         this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
+        this.view.updateStudent = new Button("update");
+        this.view.gridPaneforAverages.add(this.view.updateStudent,2,2);
+        this.view.updateStudent.setOnAction(e -> printAverageOfStudent(this.view.selectStudentsCB.getValue()));
+
+
         Label rulesforCourses = new Label("Here you can select a course and see the average grade in said course.");
         this.view.gridPaneforAverages.add(rulesforCourses, 1, 6);
         //This allows us to choose an option on a list
@@ -287,23 +292,23 @@ public class ProjectController {
         this.view.selectCourseCB.setItems(getCourses());
         this.view.selectCourseCB.getSelectionModel().selectFirst();
 
+        this.view.updateCourse = new Button("update");
+        this.view.gridPaneforAverages.add(this.view.updateCourse,2,7);
+        this.view.updateCourse.setOnAction(e -> printAverageOfCourse(this.view.selectCourseCB.getValue()));
+
+
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldAverageOfCourse = new TextArea();
-        this.view.textfieldAverageOfCourse.setMaxWidth(200);
+        this.view.textfieldAverageOfCourse.setMaxWidth(400);
         this.view.textfieldAverageOfCourse.setMaxHeight(100);
         this.view.textfieldAverageOfStudent = new TextArea();
-        this.view.textfieldAverageOfStudent.setMaxWidth(200);
+        this.view.textfieldAverageOfStudent.setMaxWidth(400);
         this.view.textfieldAverageOfStudent.setMaxHeight(100);
         this.view.gridPaneforAverages.add(this.view.textfieldAverageOfCourse,1,8,2,2);
         this.view.gridPaneforAverages.add(this.view.textfieldAverageOfStudent,1,3,2,2);
 
 
         this.view.gridPaneforAverages.add(this.view.goBack,100,20);
-
-
-        //Now we act
-        printAverageOfStudent(this.view.selectStudentsCB.getValue());
-        printAverageOfCourse(this.view.selectStudentsCB.getValue());
     }
 
     void printAverageOfStudent(String studentName){
@@ -326,7 +331,7 @@ public class ProjectController {
             ArrayList<CourseInfo> course = model.QueryforCourse(courseName); //we get the course id
             System.out.println("course size is " + course.size());
 
-            Double courseAverage = model.QueryCourseAverage(course.get(1).courseID); //we get the average connected to this student id
+            Double courseAverage = model.QueryCourseAverage(course.get(0).courseID); //we get the average connected to this student id
 
             this.view.textfieldAverageOfCourse.appendText( "The average in " + courseName + " is " + courseAverage + "\n");
 

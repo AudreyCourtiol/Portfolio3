@@ -42,6 +42,8 @@ public class ProjectView {
     TextArea textfieldAverageOfCourse;
     TextArea textfieldAverageOfStudent;
     ComboBox<String> selectCourseCB;
+    Button updateStudent;
+    Button updateCourse;
 
 
     Scene modifyGradesScene;
