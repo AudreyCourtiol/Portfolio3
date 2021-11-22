@@ -1,14 +1,13 @@
 import javafx.application.Platform;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.event.ActionEvent;
+import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
 
 import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.concurrent.atomic.AtomicReference;
 
 public class ProjectController {
     ProjectView view;
@@ -177,15 +176,15 @@ public class ProjectController {
         this.view.selectStudentsCB.setItems(getStudents());
         this.view.selectStudentsCB.getSelectionModel().selectFirst();
 
+        //Step 1: we check if the grade can be modified
         this.view.enterGrade = new Button("Enter grade");
         this.view.gridPaneforModifyGrades.add(this.view.enterGrade, 1, 3, 1 ,1);
         //We call the method that will tell us whether we can modify the grade or not
-        this.view.enterGrade.setOnAction(e -> modifyGradeOfChosenStudent(this.view.selectStudentsCB.getValue()));
+        this.view.enterGrade.setOnAction(e -> canGradeBeModified(this.view.selectStudentsCB.getValue()));
 
-
+        //Step 2: if it can be modified, the ok button can be used
         this.view.ok = new Button("Ok");
         this.view.gridPaneforModifyGrades.add(this.view.ok, 2, 6, 1 ,1);
-
 
         this.view.textfieldModifyGrades = new TextArea();
         this.view.textfieldModifyGrades.setMaxWidth(400);
@@ -202,7 +201,7 @@ public class ProjectController {
         this.view.gridPaneforModifyGrades.add(this.view.goBack,1,6);
     }
 
-    void modifyGradeOfChosenStudent(String studentName){
+    void canGradeBeModified(String studentName){
         try {
             ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
 
@@ -212,11 +211,9 @@ public class ProjectController {
             ArrayList<Integer> coursesID = model.QueryForCourseID(student.get(0).studentID);
 
             ArrayList<String> courseNames = model.QueryForCourseName(coursesID);
-            Double grade;
 
            //We go through the grades
             for (int i = 0; i < Grades.size(); i++) {
-                System.out.println("the current grade is " + Grades.get(i));
 
                 //If the grade is null
                 if(Grades.get(i) == 0){
@@ -224,44 +221,49 @@ public class ProjectController {
                     this.view.textfieldModifyGrades.appendText("You can modify the grade for " + courseNames.get(i) + "\n");
                     this.view.textfieldModifyGrades.appendText("Please insert the grade you want to add in the other textfield.\n");
 
-                    //We display in the console the grade typed by the user
-                    this.view.ok.setOnAction(e -> System.out.println("Grade: " + this.view.textfieldEnterGrade.getText()));
-                    String input = "ERROR";
 
-                    //As long as the grade hasn't been entered, we wait
-                    while(!this.view.ok.isPressed()){
-                        int a = 0;
-                        a++;
-                    }
+                    //this.view.ok.setOnAction(e -> System.out.println("Grade: " + this.view.textfieldEnterGrade.getText()));
+                    this.view.ok.setOnAction(new EventHandler() {
+                        @Override
+                        public void handle(Event event) {
 
-                    if(this.view.ok.isPressed()){
-                        //We get the input and translate it to a double
+                            try {
+                                getInputGrade(student.get(0).studentID); //We go get the grade entered by the user
+                            } catch (SQLException e) {
+                                e.printStackTrace();
+                            }
 
-                        Console cnsl = System.console();
-
-                        if(cnsl != null){
-                            input = cnsl.readLine("Grade: "); //we get the grade from the console
                         }
-                    }
+                    });
 
-                    grade = Double.parseDouble(input); //we translate the grade from a string to a double
-
-
-                    model.UpdateGrade(grade, student.get(0).studentID); //we modify the grade in the database
-
-                    this.view.textfieldModifyGrades.appendText(i + ": new grade is " + grade + "\n");
-
-                }else{ //ca se met pas a jour a chaque fois que je selectionne un nouvel etudiant
+                }else{
                     this.view.textfieldModifyGrades.appendText("there is no grade to fill out for this student\n");
                 }
             }
-
-
-
         }catch(SQLException e ){
             System.out.println(e.getMessage());
             System.out.println("error in controller: " + e.getMessage());
         }
+    }
+
+    void getInputGrade(Integer studentID) throws SQLException {
+        //We get the input and translate it to a double
+        System.out.println("Grade: " + this.view.textfieldEnterGrade.getText());
+
+        String input = "";
+        Console cnsl = System.console();
+
+        if(cnsl != null){
+            input = cnsl.readLine("Grade: "); //we get the grade from the console
+        }
+
+        double grade = Double.parseDouble(input); //we translate the grade from a string to a double
+
+        model.UpdateGrade(grade, studentID);
+
+        //We display the grade entered again to confirm it was taken into account
+        this.view.textfieldModifyGrades.appendText("New grade is " + grade + "\n");
+
     }
 
     void getAverages() throws SQLException {

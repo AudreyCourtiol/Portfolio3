@@ -207,17 +207,17 @@ public class ProjectModel {
     //Query where if grade is 0 than you can type in a grade
     public void UpdateGrade(double g, int StudentID) throws SQLException {
 
-        System.out.println("Please insert the grade you want to add: ");
+        //System.out.println("Please insert the grade you want to add: ");
 
         // language=<SQL>
         String sql = "UPDATE Grade SET Grade =" + g + " WHERE Grade IS NULL AND StudentID =" + StudentID + ";";
 
         pstmt = conn.prepareStatement(sql);
         rs = stmt.executeQuery(sql);
-/*
+
         while (rs != null && rs.next()) {
             g = rs.getDouble(1);
-        }*/
+        }
     }
 
     //Query where we get the average grade of a student
