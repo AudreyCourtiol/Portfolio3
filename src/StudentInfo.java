@@ -1,9 +1,9 @@
 public class StudentInfo {
-    Integer studentID =null;
-    String studentName = null;
-    String studentAddress = null;
+    Integer studentID;
+    String studentName;
+    String studentAddress;
 
-
+    //This class helps us collect the students data
     StudentInfo(Integer id,String name, String address){
         this.studentID = id;
         this.studentName = name;

@@ -1,8 +1,8 @@
 public class CourseInfo {
-    Integer courseID =null;
-    String courseName = null;
+    Integer courseID;
+    String courseName;
 
-
+    //This class helps us collect the course data
     CourseInfo(Integer id,String name){
         this.courseID = id;
         this.courseName = name;

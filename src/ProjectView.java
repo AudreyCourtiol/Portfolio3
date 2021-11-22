@@ -5,13 +5,11 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextArea;
-import javafx.scene.control.TextInputDialog;
 import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
-import javafx.collections.ObservableList;
 
 public class ProjectView {
-    //a gridPane is the thing on which you display your labels, buttons, text fields ect
+    //a gridPane is the thing on which you display your labels, buttons, text fields ect.
     Stage primaryStage;
 
     //Scene number 1 : menu
@@ -23,7 +21,7 @@ public class ProjectView {
     Button ModifyGrades;
 
 
-    //Scene for students informations
+    //Scene for students information
     GridPane gridPaneForStudents;
     Scene studentScene;
     Button seeCourses;
@@ -53,8 +51,6 @@ public class ProjectView {
     Button enterGrade;
     Button ok;
 
-    TextArea textfield;
-
     ObservableList<String> students;
     ObservableList<String> courses;
     ObservableList<String> professors;
@@ -65,6 +61,7 @@ public class ProjectView {
         this.primaryStage = primaryStage;
         primaryStage.setTitle("Students Course Registration");
 
+        //GridPanes initialized
         startview=new GridPane();
         gridPaneForStudents = new GridPane();
         gridPaneforAverages = new GridPane();
@@ -91,8 +88,7 @@ public class ProjectView {
         startview.setVgap(5);
 
         //we choose what we want to display on our first display
-
-        //initialize the buttons
+        //initialization of the buttons
         ExitBtn=new Button("Exit");
         FindStudents=new Button("Find students");
         GetAverages = new Button("Get averages");
@@ -109,11 +105,9 @@ public class ProjectView {
     public Parent asParentForPrimaryScene(){
         return  startview;
     }
-
     public Parent asParentForStudentScene(){
         return gridPaneForStudents;
     }
-
     public Parent asParentForModifyGrades(){
         return gridPaneforModifyGrades;
     }

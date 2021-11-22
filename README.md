@@ -52,25 +52,29 @@ C.CourseID as CID, C.ProfessorID as PID,
 P.ProfessorID as PID,
 
        G.StudentID from Grade as g
-        inner join Student S on g.StudentID = S.StudentName
-        inner join Course C on g.CourseID = C.CourseName
-        inner join Professor P on C.ProfessorID = P.ProfessorID;
+                            inner join Student S on g.StudentID = S.StudentName
+                            inner join Course C on g.CourseID = C.CourseName
+                            inner join Professor P on C.ProfessorID = P.ProfessorID;
+
 
 -- select student and print out courses taken
 SELECT StudentID, StudentAddress from Student
 WHERE StudentName= ?;
 
+SELECT CourseID from Course
+WHERE CourseName ='?';
+
 SELECT CourseID from Grade
-WHERE StudentID =?;
+WHERE StudentID = ?;
 
 SELECT CourseName from Course
-WHERE CourseID =?;
+WHERE CourseID = ?;
 
 
 --ask to see grade(s)
+SELECT Grade from Grade WHERE StudentID =?;
 
 --if grade = null, type in grade
---I'm trying shit out....
 SELECT Grade
 FROM Grade where Grade= null;
 
@@ -79,7 +83,7 @@ VALUES (?,CourseID,StudentID);
 
 UPDATE Grade
 SET Grade= '?'
-WHERE Grade=null;
+WHERE Grade IS NULL;
 
 INSERT INTO Grade (Grade, CourseID, StudentID)
 SELECT Grade
@@ -122,6 +126,8 @@ SELECT AVG(Grade)
 FROM Grade where StudentID=11;
 
 --get average grade in a course
+
+
 
 SELECT AVG(Grade)
 FROM Grade where CourseID=1;

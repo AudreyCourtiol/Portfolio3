@@ -4,16 +4,12 @@ import javafx.collections.ObservableList;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.scene.control.*;
-
-import java.io.Console;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Scanner;
 
 public class ProjectController {
     ProjectView view;
     ProjectModel model;
-
 
     public ProjectController(ProjectView v, ProjectModel m) throws SQLException {
         this.view=v;
@@ -46,10 +42,7 @@ public class ProjectController {
                 ex.printStackTrace();
             }
         });
-
         this.view.goBack.setOnAction(e -> goBack());
-
-
 
         //this.model.closeCourseDataConnection();
         this.model.createStatement();
@@ -58,16 +51,6 @@ public class ProjectController {
         this.view.students = getStudents();
         this.view.courses = getCourses();
         this.view.grades = getGrades();
-
-
-        //this.view.stations =getStations();
-        //this.view.hours=getHours();
-        //this.view.minutes=getMinutes();
-        //this.view.FindTrains.setOnAction(e->HandlerPrintTrainRoutes(view.StartStationComB.getValue(),view.EndStationComB.getValue(),
-            //    view.HoursComB.getValue(),view.MinutesComB.getValue(), view.textfield));
-
-        //    this.model.SQLQueryStationNames();
-        //view.configure();
     }
 
     void goBack(){
@@ -75,7 +58,7 @@ public class ProjectController {
         this.view.primaryStage.show();
     }
 
-    void findStudentsPage() throws SQLException { //we display the scene with the students' informations
+    void findStudentsPage() throws SQLException { //we display the scene with the students' information
         this.view.primaryStage.setScene(this.view.studentScene);
         this.view.primaryStage.show();
 
@@ -98,7 +81,7 @@ public class ProjectController {
         this.view.seeCourses.setOnAction(e -> printCoursesTakenByStudent(this.view.selectStudentsCB.getValue()));
         this.view.seeGrades.setOnAction(e -> printGradesOfChosenStudent(this.view.selectStudentsCB.getValue()));
 
-        this.view.gridPaneForStudents.add(this.view.seeCourses, 1, 7); ///mettre à la bonne place
+        this.view.gridPaneForStudents.add(this.view.seeCourses, 1, 7);
         this.view.gridPaneForStudents.add(this.view.seeGrades, 1, 60);
 
         //We display textfields where we will print out the name of the courses and the student's grades
@@ -325,7 +308,6 @@ public class ProjectController {
         }
     }
 
-    //DOESNT WORK : model line 124
     void printAverageOfCourse(String courseName){
         try{
             ArrayList<CourseInfo> course = model.QueryforCourse(courseName); //we get the course id
@@ -343,61 +325,16 @@ public class ProjectController {
 
     public ObservableList<String> getStudents() throws SQLException {
         ArrayList<String> students = model.SQLQueryStudents();
-        ObservableList<String> studentnames= FXCollections.observableArrayList(students);
-        return studentnames;
+        return FXCollections.observableArrayList(students);
     }
 
     public ObservableList<String> getCourses() throws SQLException {
         ArrayList<String> courses = model.SQLQueryCourseNames();
-        ObservableList<String> coursenames= FXCollections.observableArrayList(courses);
-        return coursenames;
+        return FXCollections.observableArrayList(courses);
     }
 
     public ObservableList<Double> getGrades() throws SQLException {
         ArrayList<Double> grades = model.SQLQueryGrades();
-        ObservableList<Double> gradevalues= FXCollections.observableArrayList(grades);
-        return gradevalues;
+        return FXCollections.observableArrayList(grades);
     }
-
-/*
-    public void HandlerPrintTrainRoutes(String From, String To, Integer Hour, Integer Minutes, TextArea txtArea)  {
-        txtArea.clear();
-        txtArea.appendText(" Train, From Station: Departure -> To station: arrival \n");
-        double time = (double) Hour + ((double) Minutes / 100);
-        try {
-            ArrayList<TrainInfo> trips = model.QueryforDepartures(From, To, time);
-
-            for (int i = 0; i < trips.size(); i++) {
-                String deptime = String.format("%.2f", trips.get(i).departuretime);
-                String arrtime = String.format("%.2f", trips.get(i).arrivaltime);
-                System.out.println(i + ";" + trips.get(i).startstation + ": " + deptime + " -> " + trips.get(i).endstation + ": " + arrtime + "\n");
-                txtArea.appendText(i + ";" + trips.get(i).startstation + ": " + deptime + " -> " + trips.get(i).endstation + ": " + arrtime + "\n");
-            }
-        }catch (SQLException e ){
-            System.out.println(e.getMessage());
-        }
-    }
-
-    public ObservableList<String> getStations() throws SQLException {
-        ArrayList<String> stations= model.SQLQueryStationNames();
-        ObservableList<String> stationnames= FXCollections.observableArrayList(stations);
-        return stationnames;
-    }
-
-    public ObservableList<Integer>  getHours(){
-        ArrayList<Integer> hours=new ArrayList<>();
-        for(int i= 0;i<24;i++){
-            hours.add(i);
-        }
-        return FXCollections.observableArrayList(hours);
-    }
-
-
-    public ObservableList<Integer> getMinutes(){
-        ArrayList<Integer> minutes=new ArrayList<>();
-        for(int i=0;i<60;i++) {
-            minutes.add(i);
-        }
-        return FXCollections.observableArrayList(minutes);
-    }*/
 }
