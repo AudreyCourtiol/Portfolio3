@@ -184,6 +184,36 @@ public class ProjectController {
 
 
         this.view.gridPaneforModifyGrades.add(this.view.goBack,40,80);
+
+        //We call the method that will print out the average of the student
+        modifyGradeOfChosenStudent(this.view.selectStudentsCB.getValue());
+    }
+
+    void modifyGradeOfChosenStudent(String studentName){
+        try {
+            ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
+
+            //We get all the grades of the student
+            ArrayList<Double> Grades = model.QueryForGrades(student.get(0).studentID);
+
+            Double grade;
+
+           //We go through the grades
+            for (int i = 0; i < Grades.size(); i++) {
+                //If the grade is null
+                if(Grades.get(i) == null){
+
+                    //
+                    grade = model.UpdateGrade(student.get(0).studentID);
+                }
+            }
+
+
+            //this.view.textfieldAverageOfStudent.appendText(i + ":" + Grades.get(i) + "\n");
+        }catch(SQLException e ){
+            System.out.println(e.getMessage());
+            System.out.println("error in controller: " + e.getMessage());
+        }
     }
 
     void getAverages() throws SQLException {
@@ -242,10 +272,11 @@ public class ProjectController {
         }
     }
 
+    //DOESNT WORK : model line 124
     void printAverageOfCourse(String courseName){
         try{
             ArrayList<CourseInfo> course = model.QueryforCourse(courseName); //we get the course id
-            System.out.println(course.size());
+            System.out.println("course size is " + course.size());
 
             Double courseAverage = model.QueryCourseAverage(course.get(1).courseID); //we get the average connected to this student id
 

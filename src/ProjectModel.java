@@ -37,7 +37,7 @@ public class ProjectModel {
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
             String name = rs.getString(1);
-            System.out.println(name);
+            //System.out.println(name);
             students.add(name);
         }
         return students;
@@ -51,7 +51,7 @@ public class ProjectModel {
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
             String name = rs.getString(1);
-            System.out.println(name);
+            //System.out.println(name);
             course.add(name);
         }
         return course;
@@ -65,7 +65,7 @@ public class ProjectModel {
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
             Double value = rs.getDouble(1);
-            System.out.println(value);
+            //System.out.println(value);
             grades.add(value);
         }
         return grades;
@@ -79,7 +79,7 @@ public class ProjectModel {
         rs = stmt.executeQuery(sql);
         while (rs != null && rs.next()) {
             String name = rs.getString(1);
-            System.out.println(name);
+            //System.out.println(name);
             prof.add(name);
         }
         return prof;
@@ -101,7 +101,7 @@ public class ProjectModel {
             String address = rs.getString(2);
             Integer id = rs.getInt(1);
 
-            System.out.println(name + ": " + address + " and id is " + id); //we print out the information we got
+            //System.out.println(name + ": " + address + " and id is " + id); //we print out the information we got
             StudentInfo t = new StudentInfo(id, name, address);
             studentInfo.add(t);
         }
@@ -119,6 +119,10 @@ public class ProjectModel {
 
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
+
+        if(!rs.next()){
+            System.out.println("ya pas de next");
+        }
 
         while (rs != null && rs.next()) {
             Integer id = rs.getInt(1);
@@ -204,13 +208,16 @@ public class ProjectModel {
         double g = 0;
         System.out.println("Grade is null please insert actual grade: ");
         g = in.nextInt();
+
         // language=<SQL>
         String sql = "UPDATE Grade SET Grade =" + g + " WHERE Grade IS NULL AND StudentID =" + StudentID + ";";
+
         pstmt = conn.prepareStatement(sql);
         rs = stmt.executeQuery(sql);
+
         while (rs != null && rs.next()) {
             g = rs.getDouble(1);
-            ;
+
         }
         return g;
     }
