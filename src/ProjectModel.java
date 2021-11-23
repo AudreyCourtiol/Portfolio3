@@ -31,7 +31,9 @@ public class ProjectModel {
         ArrayList<String> students = new ArrayList<>();
         // language=<SQL>
         String sql = "Select StudentName from Student";
+
         rs = stmt.executeQuery(sql);
+
         while (rs != null && rs.next()) {
             String name = rs.getString(1);
             students.add(name);
@@ -44,10 +46,12 @@ public class ProjectModel {
         ArrayList<String> course = new ArrayList<>();
         // language=<SQL>
         String sql = "Select CourseName from Course";
+
         rs = stmt.executeQuery(sql);
+
         while (rs != null && rs.next()) {
             String name = rs.getString(1);
-            //System.out.println(name);
+
             course.add(name);
         }
         return course;
@@ -58,7 +62,9 @@ public class ProjectModel {
         ArrayList<Double> grades = new ArrayList<>();
         // language=<SQL>
         String sql = "Select Grade from Grade";
+
         rs = stmt.executeQuery(sql);
+
         while (rs != null && rs.next()) {
             Double value = rs.getDouble(1);
             grades.add(value);
@@ -85,8 +91,10 @@ public class ProjectModel {
         //This is the sql line that gets us the information of the student
         // language=<SQL>
         String sql = "SELECT StudentID, StudentAddress from Student WHERE StudentName='" + name + "';";
+
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
+
         while (rs != null && rs.next()) {
             String address = rs.getString(2);
             Integer id = rs.getInt(1);
@@ -102,17 +110,16 @@ public class ProjectModel {
         //This is the sql line that gets us the information of the student
         // language=<SQL>
         String sql = "SELECT CourseID from Course WHERE CourseName ='" + name + "';";
+
         pstmt = conn.prepareStatement(sql);
+
         try (ResultSet ignored = rs = pstmt.executeQuery()) {
             while (rs != null && rs.next()) {
                 Integer id = rs.getInt(1);
-                System.out.println("course id " + id);
+
                 CourseInfo t = new CourseInfo(id, name);
                 courseInfo.add(t);
             }
-        }
-        if(!rs.next()){
-            System.out.println("ya pas de next");
         }
         return courseInfo;
     }
@@ -123,11 +130,13 @@ public class ProjectModel {
         //This is the sql line that gets us the information of the student
         // language=<SQL>
         String sql = "SELECT CourseID from Grade WHERE StudentID ='" + StudentID + "';";
+
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
+
         while (rs != null && rs.next()) {
             int id = rs.getInt(1); //we get the course ID
-            System.out.println("course id is " + id);
+
             courseID.add(id);
         }
         return courseID;
@@ -138,10 +147,13 @@ public class ProjectModel {
         ArrayList<String> courseName = new ArrayList<>();
         // language=<SQL>
         ArrayList<String> sql = new ArrayList<>();
+
         //For every course ID we have, we go and get the course name associated
         for (Integer integer : courseID) {
+            // language=<SQL>
             sql.add("SELECT CourseName from Course WHERE CourseID ='" + integer + "';");
         }
+
         //For every sql query, we get the course name in our result
         for (String s : sql) {
             pstmt = conn.prepareStatement(s);
@@ -160,11 +172,13 @@ public class ProjectModel {
         //This is the sql line that gets us the information of the student
         // language=<SQL>
         String sql = "SELECT Grade from Grade WHERE StudentID ='" + StudentID + "';";
+
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
+
         while (rs != null && rs.next()) {
             double grade = rs.getDouble(1); //we get the grade
-            System.out.println("grade gotten is " + grade);
+
             grades.add(grade);
         }
         return grades;
@@ -182,8 +196,10 @@ public class ProjectModel {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where StudentID=" + StudentID + ";";
+
         pstmt = conn.prepareStatement(sql);
         rs = pstmt.executeQuery();
+
         while (rs != null && rs.next()) {
             average = rs.getDouble(1);
         }
@@ -195,8 +211,10 @@ public class ProjectModel {
         double average = 0;
         // language=<SQL>
         String sql = "SELECT AVG(Grade) FROM Grade where CourseID=" + CourseID + ";";
+
         pstmt = conn.prepareStatement(sql);
         rs = stmt.executeQuery(sql);
+
         while (rs != null && rs.next()) {
             average = rs.getDouble(1);
         }

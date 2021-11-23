@@ -44,21 +44,22 @@ public class ProjectController {
         });
         this.view.goBack.setOnAction(e -> goBack());
 
-        //this.model.closeCourseDataConnection();
         this.model.createStatement();
 
-        //Put students' data in view
+        //Make all data accessible to view
         this.view.students = getStudents();
         this.view.courses = getCourses();
         this.view.grades = getGrades();
     }
 
+    //This method brings us back to the menu
     void goBack(){
         this.view.primaryStage.setScene(this.view.primaryScene);
         this.view.primaryStage.show();
     }
 
-    void findStudentsPage() throws SQLException { //we display the scene with the students' information
+    //we display the scene with the students' information
+    void findStudentsPage() throws SQLException {
         this.view.primaryStage.setScene(this.view.studentScene);
         this.view.primaryStage.show();
 
@@ -86,10 +87,10 @@ public class ProjectController {
 
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldCourses = new TextArea();
-        this.view.textfieldCourses.setMaxWidth(200);
+        this.view.textfieldCourses.setMaxWidth(400);
         this.view.textfieldCourses.setMaxHeight(100);
         this.view.textfieldGrades = new TextArea();
-        this.view.textfieldGrades.setMaxWidth(200);
+        this.view.textfieldGrades.setMaxWidth(400);
         this.view.textfieldGrades.setMaxHeight(100);
         this.view.gridPaneForStudents.add(this.view.textfieldCourses,1,20,2,2);
         this.view.gridPaneForStudents.add(this.view.textfieldGrades,1,70,2,2);
@@ -101,18 +102,17 @@ public class ProjectController {
         try {
             ArrayList<StudentInfo> student = model.QueryforStudent(studentName); //we get the info of the chosen student
             ArrayList<Integer> coursesID = model.QueryForCourseID(student.get(0).studentID); //we get the courses taken by that student
-            System.out.println("course id is " + coursesID.get(0));
-            System.out.println("course id is " + coursesID.get(1));
 
             //We get all the courses names to all the course IDs found
             ArrayList<String> coursesNames = model.QueryForCourseName(coursesID);
 
-            System.out.println(coursesNames.size() + " = " + coursesID.size());
-
+            this.view.textfieldCourses.appendText("Courses taken by " + studentName + ":\n");
             //We print the info of coursesNames in textfield
             for (int i = 0; i < coursesNames.size(); i++) {
-                    this.view.textfieldCourses.appendText(i + ":" + coursesNames.get(i) + "\n");
+                    this.view.textfieldCourses.appendText(coursesNames.get(i) + "\n");
             }
+            this.view.textfieldCourses.appendText("\n");
+
         }catch(SQLException e ){
                 System.out.println(e.getMessage());
                 System.out.println("error in controller: " + e.getMessage());
@@ -126,10 +126,12 @@ public class ProjectController {
 
             ArrayList<Double> Grades = model.QueryForGrades(student.get(0).studentID);
 
+            this.view.textfieldGrades.appendText("Grades of " + studentName + " in the same order as above:\n");
             //We print the info of coursesNames in textfield
             for (int i = 0; i < Grades.size(); i++) {
-                this.view.textfieldGrades.appendText(i + ":" + Grades.get(i) + "\n");
+                this.view.textfieldGrades.appendText(Grades.get(i) + "\n");
             }
+            this.view.textfieldGrades.appendText("\n");
 
         }catch(SQLException e ){
             System.out.println(e.getMessage());
@@ -219,19 +221,20 @@ public class ProjectController {
     //This method prints out the new grade
     void getInputGrade(Integer studentID) throws SQLException {
         //We get the input and translate it to a double
-        System.out.println("Grade: " + this.view.textfieldEnterGrade.getText());
         String input = this.view.textfieldEnterGrade.getText();
         double g = Double.parseDouble(input);
+
         model.UpdateGrade(g, studentID);
+
         //We display the grade entered again to confirm it was taken into account
-        this.view.textfieldModifyGrades.appendText("New grade is " + g + "\n");
+        this.view.textfieldModifyGrades.appendText("New grade is " + g + ".\n");
     }
 
-    //This method designs the gridPain of the average for the students and the courses
+    //This method designs the gridPane of the average for the students and the courses
     void getAverages() throws SQLException {
         this.view.primaryStage.setScene(this.view.averagesScene);
         this.view.primaryStage.show();
-        //Get the overall average of a student
+
         Label rulesStudentAverage = new Label("Here you can select a student to get their overall average grade of all the courses they attend: ");
         this.view.gridPaneforAverages.add(rulesStudentAverage, 1, 1);
         //This allows us to choose an option on a list
@@ -240,20 +243,25 @@ public class ProjectController {
         //We put in the list the data from the database
         this.view.selectStudentsCB.setItems(getStudents());
         this.view.selectStudentsCB.getSelectionModel().selectFirst();
+
         this.view.updateStudent = new Button("update");
         this.view.gridPaneforAverages.add(this.view.updateStudent,2,2);
         this.view.updateStudent.setOnAction(e -> printAverageOfStudent(this.view.selectStudentsCB.getValue()));
+
         Label rulesforCourses = new Label("Here you can select a course and see the average grade in said course.");
         this.view.gridPaneforAverages.add(rulesforCourses, 1, 6);
+
         //This allows us to choose an option on a list
         this.view.selectCourseCB = new ComboBox<>();
         this.view.gridPaneforAverages.add(this.view.selectCourseCB,1,7);
         //We put in the list the data from the database
         this.view.selectCourseCB.setItems(getCourses());
         this.view.selectCourseCB.getSelectionModel().selectFirst();
+
         this.view.updateCourse = new Button("update");
         this.view.gridPaneforAverages.add(this.view.updateCourse,2,7);
         this.view.updateCourse.setOnAction(e -> printAverageOfCourse(this.view.selectCourseCB.getValue()));
+
         //We display textfields where we will print out the name of the courses and the student's grades
         this.view.textfieldAverageOfCourse = new TextArea();
         this.view.textfieldAverageOfCourse.setMaxWidth(400);
@@ -263,6 +271,7 @@ public class ProjectController {
         this.view.textfieldAverageOfStudent.setMaxHeight(100);
         this.view.gridPaneforAverages.add(this.view.textfieldAverageOfCourse,1,8,2,2);
         this.view.gridPaneforAverages.add(this.view.textfieldAverageOfStudent,1,3,2,2);
+
         this.view.gridPaneforAverages.add(this.view.goBack,100,20);
     }
 
@@ -282,7 +291,6 @@ public class ProjectController {
     void printAverageOfCourse(String courseName){
         try{
             ArrayList<CourseInfo> course = model.QueryforCourse(courseName); //we get the course id
-            System.out.println("course size is " + course.size());
 
             Double courseAverage = model.QueryCourseAverage(course.get(0).courseID); //we get the average connected to this student id
 
